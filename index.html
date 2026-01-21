@@ -1,10 +1,218 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="pt-br" class="h-full bg-[#121212]">
+<head>
     <meta charset="UTF-8">
-    <title>Diagnóstico</title>
-  </head>
-  <body>
-    <h1>Site funcionando</h1>
-  </body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico de Autoridade Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Configuração de cores personalizadas para o tom "Premium Dark"
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#1A1A1A', // Cinza chumbo profundo
+                            light: '#F3F4F6', // Branco opaco/gelo
+                            gold: '#F5E6C4',  // Dourado claro estilo champanhe
+                            goldHover: '#DCC398' // Dourado um pouco mais escuro para hover
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'], // Fonte limpa e moderna
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        /* Classes utilitárias para transições suaves */
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        }
+        .btn-option {
+            @apply w-full text-left p-4 rounded-lg border border-gray-700 bg-brand-dark text-brand-light hover:border-brand-gold hover:bg-[#252525] transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-opacity-50 active:scale-[0.99];
+        }
+    </style>
+</head>
+<body class="h-full flex items-center justify-center p-4 font-sans antialiased">
+
+    <main id="quiz-container" class="w-full max-w-md p-8 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-gray-800 fade-enter-active">
+        
+        <div class="mb-6">
+            <div class="flex justify-between text-sm text-brand-gold mb-2 font-medium">
+                <span>Diagnóstico Executivo</span>
+                <span id="progress-text">Questão 1 de 4</span>
+            </div>
+            <div class="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
+                <div id="progress-bar" class="h-full bg-brand-gold transition-all duration-500 ease-out" style="width: 25%"></div>
+            </div>
+        </div>
+
+        <div id="question-area" class="transition-opacity duration-300 ease-in-out">
+            <h2 id="question-text" class="text-xl font-semibold text-white mb-6 leading-tight">
+                </h2>
+            <div id="options-container" class="space-y-3">
+                </div>
+        </div>
+
+        <div id="result-area" class="hidden fade-enter text-center">
+            <div class="mb-6">
+                <svg class="w-16 h-16 text-brand-gold mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                
+                <h2 class="text-2xl font-bold text-white mb-2">Diagnóstico Concluído</h2>
+                <h3 id="result-title" class="text-xl font-semibold text-brand-gold mb-4">
+                    </h3>
+                <p id="result-description" class="text-brand-light text-base leading-relaxed mb-8">
+                    </p>
+            </div>
+            
+            <a href="#SEU-LINK-DO-WHATSAPP-AQUI" class="block w-full py-4 px-6 bg-brand-gold hover:bg-brand-goldHover text-brand-dark font-bold rounded-lg transition-colors duration-200 shadow-[0_0_15px_rgba(245,230,196,0.2)]">
+                Solicitar Plano de Ação Executivo
+            </a>
+        </div>
+
+    </main>
+
+    <script>
+        // --- Lógica do Quiz ---
+
+        // 1. Definição das Perguntas e Pontuações (Ajuste conforme sua metodologia)
+        const questions = [
+            {
+                question: "Com que frequência você publica conteúdo estratégico no seu perfil?",
+                options: [
+                    { text: "Raramente, quando sobra tempo.", score: 1 },
+                    { text: "Tento manter 2-3 vezes na semana, mas oscila.", score: 2 },
+                    { text: "Consistente e planejado, quase todo dia.", score: 3 }
+                ]
+            },
+            {
+                question: "Como você avalia a qualidade visual das suas fotos e vídeos atuais?",
+                options: [
+                    { text: "Amadoras/Caseiras (selfies rápidas).", score: 1 },
+                    { text: "Boas, mas sem uma identidade clara.", score: 2 },
+                    { text: "Profissionais, alinhadas à minha imagem executiva.", score: 3 }
+                ]
+            },
+            {
+                question: "Se um CEO ideal visitasse seu perfil hoje, ele entenderia em 5 segundos o que você vende?",
+                options: [
+                    { text: "Provavelmente não, está confuso.", score: 1 },
+                    { text: "Entenderia a área, mas talvez não o serviço premium.", score: 2 },
+                    { text: "Sim, minha bio e destaques são cristalinos.", score: 3 }
+                ]
+            },
+            {
+                question: "Qual o tipo de interação mais comum que você recebe?",
+                options: [
+                    { text: "Apenas curtidas de amigos e família.", score: 1 },
+                    { text: "Comentários genéricos e algumas perguntas.", score: 2 },
+                    { text: "Directs de decisores interessados no meu trabalho.", score: 3 }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let totalScore = 0;
+
+        // Referências aos elementos do DOM
+        const questionArea = document.getElementById('question-area');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+        const resultArea = document.getElementById('result-area');
+        const resultTitle = document.getElementById('result-title');
+        const resultDescription = document.getElementById('result-description');
+
+        // Função para carregar a próxima pergunta
+        function loadQuestion() {
+            // Efeito de fade out
+            questionArea.classList.add('opacity-0');
+
+            setTimeout(() => {
+                const currentQuestion = questions[currentQuestionIndex];
+                
+                // Atualiza textos
+                questionText.textContent = currentQuestion.question;
+                progressText.textContent = `Questão ${currentQuestionIndex + 1} de ${questions.length}`;
+                
+                // Atualiza barra de progresso
+                const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+
+                // Limpa opções antigas
+                optionsContainer.innerHTML = '';
+
+                // Cria os novos botões
+                currentQuestion.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.className = 'btn-option';
+                    button.textContent = option.text;
+                    button.onclick = () => selectOption(option.score);
+                    optionsContainer.appendChild(button);
+                });
+
+                // Efeito de fade in
+                questionArea.classList.remove('opacity-0');
+            }, 300); // Espera o tempo da transição CSS
+        }
+
+        // Função ao selecionar uma opção
+        function selectOption(score) {
+            totalScore += score;
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        // Função para mostrar o resultado final
+        function showResult() {
+            questionArea.classList.add('hidden');
+            document.querySelector('.mb-6').classList.add('hidden'); // Esconde a barra de progresso
+            
+            let title = "";
+            let description = "";
+
+            // Lógica de Pontuação (Máximo 12 pontos)
+            if (totalScore <= 6) {
+                title = "Nível: Presença Inicial";
+                description = "Você está no digital, mas sua imagem ainda não reflete sua real competência offline. Seu perfil precisa de uma reestruturação de base antes de atrair grandes clientes.";
+            } else if (totalScore <= 10) {
+                title = "Nível: Autoridade em Ascensão";
+                description = "Você já se destaca da maioria, mas ainda perde oportunidades por inconsistências visuais ou estratégicas. Faltam detalhes para se tornar a opção óbvia para clientes de alto ticket.";
+            } else {
+                title = "Nível: Autoridade Executiva";
+                description = "Sua presença digital é forte. O próximo passo não é mais 'aparecer', mas sim refinar sua narrativa para fechar contratos maiores com menos esforço.";
+            }
+            
+            // Adiciona a chamada final para o seu serviço em todos os resultados
+            description += "\n\nEste diagnóstico aponta que o **Pack Posicionamento Executivo** é a ferramenta exata para levar sua imagem ao nível que seu negócio exige.";
+
+            resultTitle.textContent = title;
+            resultDescription.textContent = description;
+            
+            // Mostra a área de resultado com fade in
+            resultArea.classList.remove('hidden');
+            setTimeout(() => {
+                resultArea.classList.add('fade-enter-active');
+            }, 50);
+        }
+
+        // Inicia o quiz
+        loadQuestion();
+
+    </script>
+</body>
 </html>
