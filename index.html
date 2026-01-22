@@ -12,159 +12,190 @@
   <style>
     :root{
       color-scheme: dark;
-      --bg:#0E0F11;
-      --text:#F2F2F2;
-      --muted:rgba(242,242,242,.72);
-      --line:rgba(255,255,255,.16);
-      --gold:#E6D3A3;
-      --gold2:#F1E2BF;
+      --bg:#0E0F11;               /* preto não 100% */
+      --text:#F2F2F2;             /* branco opaco */
+      --muted:rgba(242,242,242,.70);
+      --line:rgba(255,255,255,.14);
+      --gold:#E6D3A3;             /* dourado claro */
+      --goldSoft:rgba(230,211,163,.10);
     }
 
-    *{box-sizing:border-box}
+    *{ box-sizing:border-box; }
     body{
-      margin:0; min-height:100vh;
-      font-family:Inter,system-ui,sans-serif;
+      margin:0;
+      min-height:100vh;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       background:var(--bg);
       color:var(--text);
-      display:flex; align-items:center; justify-content:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       padding:24px;
       overflow:hidden;
     }
 
-    /* ===== Fundo criativo minimalista ===== */
-    .bg{
+    /* ========= FUNDO "ESPAÇO" (estrelas + drift) ========= */
+    .bg-base{
       position:fixed; inset:-60px;
-      pointer-events:none; z-index:-3;
-      background:
-        radial-gradient(900px 520px at 20% 10%, rgba(230,211,163,.12), transparent 62%),
-        radial-gradient(900px 560px at 80% 100%, rgba(230,211,163,.09), transparent 62%),
-        linear-gradient(180deg, rgba(255,255,255,.03), transparent 50%, rgba(0,0,0,.35));
-      filter: saturate(105%);
-    }
-
-    /* Orb dourado que “deriva” lentamente (assinatura visual) */
-    .orb{
-      position:fixed;
-      width:520px; height:520px;
-      left:10%; top:15%;
-      border-radius:999px;
-      background: radial-gradient(circle at 30% 30%,
-        rgba(241,226,191,.22),
-        rgba(230,211,163,.12) 35%,
-        rgba(230,211,163,.05) 55%,
-        transparent 70%
-      );
-      filter: blur(6px);
-      opacity:.9;
+      z-index:-6;
       pointer-events:none;
-      z-index:-2;
-      animation: drift 14s ease-in-out infinite;
+      background:
+        radial-gradient(900px 520px at 18% 12%, rgba(230,211,163,.11), transparent 60%),
+        radial-gradient(1000px 700px at 90% 110%, rgba(230,211,163,.08), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.03), transparent 45%, rgba(0,0,0,.45));
+      filter:saturate(105%);
+    }
+
+    .stars{
+      position:fixed; inset:0;
+      z-index:-5;
+      pointer-events:none;
+      opacity:.75;
+      mix-blend-mode:screen;
       transform: translate3d(0,0,0);
-    }
-    @keyframes drift{
-      0%   { transform: translate(-10px, 6px) scale(1); }
-      40%  { transform: translate(16px, -12px) scale(1.03); }
-      70%  { transform: translate(26px, 18px) scale(0.99); }
-      100% { transform: translate(-10px, 6px) scale(1); }
-    }
-
-    /* Shimmer diagonal ultra sutil */
-    .shimmer{
-      position:fixed; inset:-40%;
-      z-index:-1; pointer-events:none;
-      background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(230,211,163,.00) 44%,
-        rgba(230,211,163,.08) 50%,
-        rgba(230,211,163,.00) 56%,
-        transparent 100%
-      );
-      transform: rotate(-10deg);
-      animation: sweep 11.5s ease-in-out infinite;
-      opacity:.55;
-      filter: blur(1px);
-    }
-    @keyframes sweep{
-      0%{ transform: translateX(-10%) rotate(-10deg); opacity:.35; }
-      50%{ transform: translateX(10%) rotate(-10deg); opacity:.55; }
-      100%{ transform: translateX(-10%) rotate(-10deg); opacity:.35; }
+      animation: starDrift 48s linear infinite;
+      background-repeat: repeat;
+      background-size: 520px 520px;
+      /* camada única (pequenos pontos) em SVG data-uri */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Crect width='520' height='520' fill='black'/%3E%3Cg fill='white'%3E%3Ccircle cx='32' cy='44' r='0.9' opacity='0.55'/%3E%3Ccircle cx='120' cy='90' r='0.7' opacity='0.40'/%3E%3Ccircle cx='210' cy='30' r='0.8' opacity='0.35'/%3E%3Ccircle cx='300' cy='120' r='1.0' opacity='0.45'/%3E%3Ccircle cx='410' cy='60' r='0.7' opacity='0.35'/%3E%3Ccircle cx='480' cy='140' r='0.9' opacity='0.50'/%3E%3Ccircle cx='70' cy='210' r='0.8' opacity='0.40'/%3E%3Ccircle cx='160' cy='250' r='1.1' opacity='0.45'/%3E%3Ccircle cx='260' cy='220' r='0.7' opacity='0.30'/%3E%3Ccircle cx='340' cy='260' r='0.9' opacity='0.40'/%3E%3Ccircle cx='460' cy='240' r='0.8' opacity='0.35'/%3E%3Ccircle cx='500' cy='300' r='1.2' opacity='0.45'/%3E%3Ccircle cx='40' cy='360' r='0.8' opacity='0.30'/%3E%3Ccircle cx='110' cy='430' r='1.0' opacity='0.45'/%3E%3Ccircle cx='220' cy='410' r='0.7' opacity='0.30'/%3E%3Ccircle cx='310' cy='380' r='0.9' opacity='0.40'/%3E%3Ccircle cx='390' cy='460' r='0.8' opacity='0.35'/%3E%3Ccircle cx='470' cy='420' r='1.1' opacity='0.40'/%3E%3C/g%3E%3C/svg%3E");
+      filter: blur(0.2px);
     }
 
-    /* Grain bem leve */
-    .grain{
-      position:fixed; inset:-80px;
-      z-index:-1; pointer-events:none;
-      opacity:.07;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-      mix-blend-mode: overlay;
+    .stars2{
+      position:fixed; inset:-20%;
+      z-index:-4;
+      pointer-events:none;
+      opacity:.45;
+      mix-blend-mode:screen;
+      background-repeat: repeat;
+      background-size: 740px 740px;
+      animation: starDrift2 70s linear infinite;
+      transform: translate3d(0,0,0);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='740' height='740'%3E%3Crect width='740' height='740' fill='black'/%3E%3Cg fill='white'%3E%3Ccircle cx='60' cy='70' r='1.1' opacity='0.25'/%3E%3Ccircle cx='190' cy='140' r='1.4' opacity='0.18'/%3E%3Ccircle cx='350' cy='80' r='1.0' opacity='0.16'/%3E%3Ccircle cx='520' cy='160' r='1.6' opacity='0.18'/%3E%3Ccircle cx='690' cy='120' r='1.1' opacity='0.14'/%3E%3Ccircle cx='110' cy='330' r='1.5' opacity='0.16'/%3E%3Ccircle cx='260' cy='360' r='1.0' opacity='0.14'/%3E%3Ccircle cx='440' cy='320' r='1.7' opacity='0.16'/%3E%3Ccircle cx='610' cy='390' r='1.2' opacity='0.14'/%3E%3Ccircle cx='720' cy='520' r='1.8' opacity='0.16'/%3E%3Ccircle cx='90' cy='610' r='1.3' opacity='0.14'/%3E%3Ccircle cx='310' cy='660' r='1.7' opacity='0.15'/%3E%3Ccircle cx='520' cy='640' r='1.1' opacity='0.12'/%3E%3Ccircle cx='640' cy='690' r='1.6' opacity='0.14'/%3E%3C/g%3E%3C/svg%3E");
+      filter: blur(0.6px);
     }
 
-    /* ===== Layout minimal ===== */
-    .wrap{ width:100%; max-width:860px; }
+    .nebula{
+      position:fixed; inset:-40px;
+      z-index:-3;
+      pointer-events:none;
+      background:
+        radial-gradient(800px 520px at 8% 5%, rgba(230,211,163,.10), transparent 58%),
+        radial-gradient(900px 520px at 92% 0%, rgba(242,242,242,.06), transparent 55%),
+        radial-gradient(900px 600px at 60% 112%, rgba(230,211,163,.07), transparent 60%);
+      animation: nebulaBreath 14s ease-in-out infinite;
+      opacity:.85;
+    }
+
+    @keyframes starDrift{
+      0%   { transform: translate3d(0,0,0); }
+      100% { transform: translate3d(-520px, 520px, 0); }
+    }
+    @keyframes starDrift2{
+      0%   { transform: translate3d(0,0,0); }
+      100% { transform: translate3d(740px, -740px, 0); }
+    }
+    @keyframes nebulaBreath{
+      0%,100% { filter: blur(0px); opacity:.80; }
+      50%     { filter: blur(1px); opacity:.92; }
+    }
+
+    /* ========= CONTEÚDO ========= */
+    .wrap{ width:100%; max-width: 860px; }
+
     .q{
-      font-size:clamp(28px,4vw,56px);
-      line-height:1.05;
-      font-weight:500;
-      margin:0 0 22px;
-      letter-spacing:-0.02em;
+      font-size: clamp(28px, 4vw, 56px);
+      line-height: 1.05;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin: 0 0 22px;
     }
+
     .p{
-      font-size:18px;
-      line-height:1.6;
-      color:var(--muted);
-      max-width:720px;
-      margin:0 0 34px;
+      margin: 0 0 34px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 720px;
     }
+
     .field{
       width:100%;
-      font-size:clamp(18px,2vw,26px);
-      padding:14px 0;
-      background:transparent;
-      border:none;
-      border-bottom:1px solid var(--line);
-      color:var(--text);
+      font-size: clamp(18px, 2vw, 26px);
+      padding: 14px 0;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--line);
+      color: var(--text);
       outline:none;
-      transition:border-color .2s;
+      transition: border-color 180ms ease;
     }
-    .field:focus{ border-bottom-color:var(--gold); }
-    .field::placeholder{ color:rgba(242,242,242,.28); }
+    .field::placeholder{ color: rgba(242,242,242,.28); }
+    .field:focus{ border-bottom-color: var(--gold); }
 
     .btn{
-      margin-top:28px;
-      padding:12px 22px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:var(--gold);
-      color:#0E0F11;
-      font-weight:600;
+      margin-top: 28px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: var(--gold);
+      color: #0E0F11;
+      font-weight: 600;
       cursor:pointer;
-      transition:opacity .15s, transform .12s;
+      transition: opacity 160ms ease, transform 120ms ease;
+      box-shadow: 0 12px 34px rgba(0,0,0,.35);
     }
     .btn:hover{ opacity:.92; }
-    .btn:active{ transform:scale(.98); }
+    .btn:active{ transform: scale(.985); }
 
-    /* Slides / transição */
-    .slide{ transition:opacity .25s, transform .25s; }
-    .out{ opacity:0; transform:translateY(-6px); }
-    .in{ opacity:0; transform:translateY(10px); }
+    /* Choices minimalistas */
+    .options{ display:flex; flex-direction:column; gap:12px; margin-top: 6px; }
+    .opt{
+      text-align:left;
+      padding:14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.02);
+      color: rgba(242,242,242,.92);
+      cursor:pointer;
+      transition: border-color .18s, transform .12s, background .18s;
+    }
+    .opt:hover{ border-color: rgba(230,211,163,.40); }
+    .opt:active{ transform: scale(.99); }
+    .opt.selected{
+      border-color: rgba(230,211,163,.88);
+      background: rgba(230,211,163,.08);
+    }
 
-    .shake{ animation: shake .25s; }
+    /* Slides */
+    .slide{ transition: opacity 240ms ease, transform 240ms ease; opacity:1; transform: translateY(0); }
+    .out{ opacity:0; transform: translateY(-6px); }
+    .in{ opacity:0; transform: translateY(10px); }
+
+    .shake{ animation: shake 220ms ease-in-out; }
     @keyframes shake{
       0%{ transform: translateX(0); }
       35%{ transform: translateX(-6px); }
       70%{ transform: translateX(5px); }
       100%{ transform: translateX(0); }
     }
+
+    /* Mobile */
+    @media (max-width: 520px){
+      .p{ font-size: 16px; }
+      .btn{ width: 100%; }
+    }
   </style>
 </head>
 
 <body>
-  <div class="bg"></div>
-  <div class="orb"></div>
-  <div class="shimmer"></div>
-  <div class="grain"></div>
+  <div class="bg-base"></div>
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="nebula"></div>
 
   <main class="wrap" id="app">
+    <!-- INTRO -->
     <section id="intro" class="slide">
       <h1 class="q">Diagnóstico estratégico de posicionamento digital</h1>
       <p class="p">
@@ -174,49 +205,85 @@
       <button class="btn" id="start">Começar</button>
     </section>
 
-    <section id="form" class="slide" style="display:none">
+    <!-- FORM -->
+    <section id="form" class="slide" style="display:none;">
       <h1 class="q" id="q"></h1>
-      <input class="field" id="a" placeholder="Digite aqui" autocomplete="off" />
+      <div id="fieldWrap"></div>
       <button class="btn" id="next">Próximo</button>
     </section>
 
-    <section id="final" class="slide" style="display:none">
+    <!-- FINAL -->
+    <section id="final" class="slide" style="display:none;">
       <h1 class="q">Obrigado.</h1>
       <p class="p">Se você for selecionado, eu entrarei em contato via WhatsApp com os próximos passos.</p>
-      <p class="p" id="status" style="font-size:14px;opacity:.7"></p>
+      <!-- Sem status de erro. Silêncio. -->
     </section>
   </main>
 
   <script>
+    // Endpoint /exec (planilha)
     const ENDPOINT_URL =
       "https://script.google.com/macros/s/AKfycbw3rM8FHDlwdu-7WJCNJPYNnk9UcYZgWk686qKYtr4XFuSe3BnHgotAdoaeUxbw5FLD1Q/exec";
 
+    // Perguntas (inclui as duas novas)
     const QUESTIONS = [
-      { id:"nome", label:"Nome e sobrenome", type:"text", required:true },
-      { id:"area", label:"Área de atuação", type:"text", required:true },
-      { id:"tempo", label:"Tempo de mercado", type:"text", required:true },
-      { id:"perfil", label:"Link do Instagram ou site", type:"url", required:true },
-      { id:"problema", label:"Qual o principal gargalo do seu Instagram hoje?", type:"text", required:true },
-      { id:"ticket", label:"Ticket médio do seu serviço", type:"text", required:true },
-      { id:"whatsapp", label:"WhatsApp para contato", type:"tel", required:true },
+      { id:"nome", label:"Nome e sobrenome", type:"text", required:true, kind:"input" },
+      { id:"area", label:"Área de atuação", type:"text", required:true, kind:"input" },
+      { id:"tempo", label:"Tempo de mercado", type:"text", required:true, kind:"input" },
+
+      {
+        id:"momento",
+        label:"Qual situação mais descreve seu momento atual no digital?",
+        required:true,
+        kind:"choice",
+        options:[
+          "Meu posicionamento não acompanha o nível do meu serviço",
+          "Meu perfil parece genérico perto de concorrentes menos experientes",
+          "Atraio pessoas fora do meu perfil de cliente ideal",
+          "Tenho autoridade no mundo real, mas isso não é percebido no Instagram"
+        ]
+      },
+
+      { id:"perfil", label:"Link do Instagram ou site", type:"url", required:true, kind:"input" },
+      { id:"problema", label:"Qual o principal gargalo do seu Instagram hoje?", type:"text", required:true, kind:"input" },
+      { id:"ticket", label:"Ticket médio do seu serviço", type:"text", required:true, kind:"input" },
+
+      {
+        id:"invest",
+        label:"Quanto você pretende investir por mês no seu posicionamento digital?",
+        required:true,
+        kind:"choice",
+        options:[
+          "Até R$ 1.000/mês",
+          "R$ 1.000 – R$ 3.000/mês",
+          "R$ 3.000 – R$ 7.000/mês",
+          "R$ 7.000+/mês"
+        ]
+      },
+
+      { id:"whatsapp", label:"WhatsApp para contato", type:"tel", required:true, kind:"input" }
     ];
 
+    // DOM
     const intro = document.getElementById("intro");
-    const form = document.getElementById("form");
+    const form  = document.getElementById("form");
     const final = document.getElementById("final");
+
     const qEl = document.getElementById("q");
-    const aEl = document.getElementById("a");
-    const status = document.getElementById("status");
+    const fieldWrap = document.getElementById("fieldWrap");
+
+    const startBtn = document.getElementById("start");
+    const nextBtn = document.getElementById("next");
 
     let i = 0;
     const answers = {};
 
-    function hide(el){ el.style.display="none"; }
-    function show(el){ el.style.display="block"; }
+    function hide(el){ el.style.display = "none"; }
+    function show(el){ el.style.display = "block"; }
 
     function transitionOut(el){
       el.classList.add("out");
-      return new Promise(r=>setTimeout(r,250));
+      return new Promise(r => setTimeout(r, 240));
     }
     function transitionIn(el){
       el.classList.remove("out");
@@ -225,12 +292,50 @@
       el.classList.remove("in");
     }
 
-    function setQuestion(){
+    function renderQuestion(){
       const q = QUESTIONS[i];
       qEl.textContent = q.label;
-      aEl.type = q.type;
-      aEl.value = answers[q.id] || "";
-      setTimeout(()=>aEl.focus(),60);
+      fieldWrap.innerHTML = "";
+
+      if (q.kind === "choice") {
+        const box = document.createElement("div");
+        box.className = "options";
+
+        const current = answers[q.id] || "";
+
+        q.options.forEach((txt) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "opt" + (txt === current ? " selected" : "");
+          btn.textContent = txt;
+
+          btn.onclick = () => {
+            answers[q.id] = txt;
+            [...box.querySelectorAll(".opt")].forEach(b => b.classList.remove("selected"));
+            btn.classList.add("selected");
+          };
+
+          box.appendChild(btn);
+        });
+
+        fieldWrap.appendChild(box);
+        return;
+      }
+
+      const input = document.createElement("input");
+      input.className = "field";
+      input.id = "a";
+      input.type = q.type || "text";
+      input.placeholder = "Digite aqui";
+      input.autocomplete = "off";
+      input.value = answers[q.id] || "";
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") { e.preventDefault(); goNext(); }
+      });
+
+      fieldWrap.appendChild(input);
+      setTimeout(() => input.focus(), 60);
     }
 
     async function start(){
@@ -238,58 +343,65 @@
       hide(intro);
       show(form);
       transitionIn(form);
-      setQuestion();
+      i = 0;
+      renderQuestion();
     }
 
-    async function next(){
-      const q = QUESTIONS[i];
-      const v = (aEl.value || "").trim();
-      if(q.required && !v){
-        aEl.classList.add("shake");
-        setTimeout(()=>aEl.classList.remove("shake"),250);
-        return;
-      }
-      answers[q.id] = v;
-      i++;
+    function nudgeInvalid(){
+      form.classList.add("shake");
+      setTimeout(() => form.classList.remove("shake"), 240);
+    }
 
-      if(i >= QUESTIONS.length){
-        await finish();
-        return;
+    async function goNext(){
+      const q = QUESTIONS[i];
+
+      if (q.kind === "choice") {
+        const v = (answers[q.id] || "").trim();
+        if (q.required && !v) { nudgeInvalid(); return; }
+      } else {
+        const input = document.getElementById("a");
+        const v = (input?.value || "").trim();
+        if (q.required && !v) { input?.classList.add("shake"); setTimeout(()=>input?.classList.remove("shake"),220); return; }
+        answers[q.id] = v;
       }
+
+      i++;
+      if (i >= QUESTIONS.length) { await finish(); return; }
 
       await transitionOut(form);
-      setQuestion();
+      renderQuestion();
       transitionIn(form);
     }
 
-   async function finish(){
-  await transitionOut(form);
-  hide(form);
-  show(final);
-  transitionIn(final);
+    async function finish(){
+      await transitionOut(form);
+      hide(form);
+      show(final);
+      transitionIn(final);
 
-  // Nunca exibir erro para o usuário
-  status.textContent = ""; // ou apaga o <p id="status"> do HTML
+      // NÃO exibir erro pro usuário (premium = silêncio)
 
-  // Envio ultra-compatível (Apps Script + GitHub Pages)
-  try{
-    const payload = {
-      submittedAt: new Date().toISOString(),
-      ...answers
-    };
+      // Envio compatível com Apps Script + GitHub Pages (sem CORS)
+      try{
+        const payload = {
+          submittedAt: new Date().toISOString(),
+          ...answers
+        };
+        const body = new URLSearchParams(payload).toString();
 
-    const body = new URLSearchParams(payload).toString();
+        await fetch(ENDPOINT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+          body
+        });
+      }catch(e){
+        // silêncio total
+      }
+    }
 
-    await fetch(ENDPOINT_URL, {
-      method: "POST",
-      mode: "no-cors", // evita bloqueio CORS/redirect
-      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-      body
-    });
-
-    // Mesmo sem conseguir ler resposta (no-cors), a gente assume "Recebido"
-    // porque o usuário não precisa saber do backend.
-  } catch (e) {
-    // Silêncio total
-  }
-}
+    startBtn.addEventListener("click", start);
+    nextBtn.addEventListener("click", goNext);
+  </script>
+</body>
+</html>
