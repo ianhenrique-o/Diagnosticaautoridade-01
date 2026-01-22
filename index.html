@@ -3,254 +3,247 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Diagnóstico Estratégico</title>
+  <title>Diagnóstico Estratégico | High-End</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      color-scheme: dark;
-      --bg:#0E0F11;               /* preto não 100% */
-      --text:#F2F2F2;             /* branco opaco */
-      --muted:rgba(242,242,242,.70);
-      --line:rgba(255,255,255,.14);
-      --gold:#E6D3A3;             /* dourado claro */
+    :root {
+      --bg: #050505;
+      --text: #ffffff;
+      --gold: #E6D3A3;
+      --accent: rgba(230, 211, 163, 0.4);
+      --glass: rgba(255, 255, 255, 0.03);
+      --line: rgba(255, 255, 255, 0.08);
+      --ease: cubic-bezier(0.23, 1, 0.32, 1);
     }
 
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-      overflow:hidden;
+    * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    /* ========= FUNDO "ESPAÇO" (estrelas + drift) ========= */
-    .bg-base{
-      position:fixed; inset:-50px;
-      z-index:-6;
-      pointer-events:none;
-      background:
-        radial-gradient(900px 520px at 18% 12%, rgba(230,211,163,.11), transparent 60%),
-        radial-gradient(1000px 700px at 90% 110%, rgba(230,211,163,.08), transparent 62%),
-        linear-gradient(180deg, rgba(255,255,255,.03), transparent 45%, rgba(0,0,0,.45));
-      filter:saturate(105%);
+    /* --- Background Animado (Imersivo) --- */
+    .space {
+      position: fixed; inset: 0; z-index: -1;
+      background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #050505 100%);
     }
 
-    .stars{
-      position:fixed; inset:0;
-      z-index:-5;
-      pointer-events:none;
-      opacity:.75;
-      mix-blend-mode:screen;
-      transform: translate3d(0,0,0);
-      animation: starDrift 48s linear infinite;
-      background-repeat: repeat;
-      background-size: 520px 520px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Crect width='520' height='520' fill='black'/%3E%3Cg fill='white'%3E%3Ccircle cx='32' cy='44' r='0.9' opacity='0.55'/%3E%3Ccircle cx='120' cy='90' r='0.7' opacity='0.40'/%3E%3Ccircle cx='210' cy='30' r='0.8' opacity='0.35'/%3E%3Ccircle cx='300' cy='120' r='1.0' opacity='0.45'/%3E%3Ccircle cx='410' cy='60' r='0.7' opacity='0.35'/%3E%3Ccircle cx='480' cy='140' r='0.9' opacity='0.50'/%3E%3Ccircle cx='70' cy='210' r='0.8' opacity='0.40'/%3E%3Ccircle cx='160' cy='250' r='1.1' opacity='0.45'/%3E%3Ccircle cx='260' cy='220' r='0.7' opacity='0.30'/%3E%3Ccircle cx='340' cy='260' r='0.9' opacity='0.40'/%3E%3Ccircle cx='460' cy='240' r='0.8' opacity='0.35'/%3E%3Ccircle cx='500' cy='300' r='1.2' opacity='0.45'/%3E%3Ccircle cx='40' cy='360' r='0.8' opacity='0.30'/%3E%3Ccircle cx='110' cy='430' r='1.0' opacity='0.45'/%3E%3Ccircle cx='220' cy='410' r='0.7' opacity='0.30'/%3E%3Ccircle cx='310' cy='380' r='0.9' opacity='0.40'/%3E%3Ccircle cx='390' cy='460' r='0.8' opacity='0.35'/%3E%3Ccircle cx='470' cy='420' r='1.1' opacity='0.40'/%3E%3C/g%3E%3C/svg%3E");
-      filter: blur(0.2px);
+    .nebula {
+      position: absolute; inset: -50%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(230,211,163,0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.03) 0%, transparent 40%);
+      filter: blur(80px);
+      animation: drift 20s infinite alternate linear;
     }
 
-    .stars2{
-      position:fixed; inset:-20%;
-      z-index:-4;
-      pointer-events:none;
-      opacity:.45;
-      mix-blend-mode:screen;
-      background-repeat: repeat;
-      background-size: 740px 740px;
-      animation: starDrift2 70s linear infinite;
-      transform: translate3d(0,0,0);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='740' height='740'%3E%3Crect width='740' height='740' fill='black'/%3E%3Cg fill='white'%3E%3Ccircle cx='60' cy='70' r='1.1' opacity='0.25'/%3E%3Ccircle cx='190' cy='140' r='1.4' opacity='0.18'/%3E%3Ccircle cx='350' cy='80' r='1.0' opacity='0.16'/%3E%3Ccircle cx='520' cy='160' r='1.6' opacity='0.18'/%3E%3Ccircle cx='690' cy='120' r='1.1' opacity='0.14'/%3E%3Ccircle cx='110' cy='330' r='1.5' opacity='0.16'/%3E%3Ccircle cx='260' cy='360' r='1.0' opacity='0.14'/%3E%3Ccircle cx='440' cy='320' r='1.7' opacity='0.16'/%3E%3Ccircle cx='610' cy='390' r='1.2' opacity='0.14'/%3E%3Ccircle cx='720' cy='520' r='1.8' opacity='0.16'/%3E%3Ccircle cx='90' cy='610' r='1.3' opacity='0.14'/%3E%3Ccircle cx='310' cy='660' r='1.7' opacity='0.15'/%3E%3Ccircle cx='520' cy='640' r='1.1' opacity='0.12'/%3E%3Ccircle cx='640' cy='690' r='1.6' opacity='0.14'/%3E%3C/g%3E%3C/svg%3E");
-      filter: blur(0.6px);
+    @keyframes drift {
+      from { transform: rotate(0deg) scale(1); }
+      to { transform: rotate(5deg) scale(1.1); }
     }
 
-    .nebula{
-      position:fixed; inset:-40px;
-      z-index:-3;
-      pointer-events:none;
-      background:
-        radial-gradient(800px 520px at 8% 5%, rgba(230,211,163,.10), transparent 58%),
-        radial-gradient(900px 520px at 92% 0%, rgba(242,242,242,.06), transparent 55%),
-        radial-gradient(900px 600px at 60% 112%, rgba(230,211,163,.07), transparent 60%);
-      animation: nebulaBreath 14s ease-in-out infinite;
-      opacity:.85;
+    /* --- Progress Bar --- */
+    .progress-container {
+      position: fixed; top: 0; left: 0; width: 100%; height: 4px;
+      background: var(--line); z-index: 10;
+    }
+    #progress-bar {
+      height: 100%; width: 0%; background: var(--gold);
+      transition: width 0.6s var(--ease);
+      box-shadow: 0 0 15px var(--gold);
     }
 
-    @keyframes starDrift{
-      0%   { transform: translate3d(0,0,0); }
-      100% { transform: translate3d(-520px, 520px, 0); }
-    }
-    @keyframes starDrift2{
-      0%   { transform: translate3d(0,0,0); }
-      100% { transform: translate3d(740px, -740px, 0); }
-    }
-    @keyframes nebulaBreath{
-      0%,100% { filter: blur(0px); opacity:.80; }
-      50%     { filter: blur(1px); opacity:.92; }
+    /* --- Layout --- */
+    .wrap {
+      width: 90%;
+      max-width: 700px;
+      position: relative;
     }
 
-    /* ========= CONTEÚDO ========= */
-    .wrap{ width:100%; max-width: 860px; }
-
-    .q{
-      font-size: montserrat(28px, 4vw, 56px);
-      line-height: 1.05;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin: 0 0 22px;
+    .slide {
+      display: none;
+      animation: fadeIn 0.8s var(--ease) forwards;
     }
 
-    .p{
-      margin: 0 0 34px;
-      font-size: 18px;
+    .slide.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); filter: blur(10px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+      letter-spacing: -0.03em;
+    }
+
+    h1 strong { font-weight: 600; color: var(--gold); }
+
+    .p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.6);
       line-height: 1.6;
-      color: var(--muted);
-      max-width: 720px;
+      margin-bottom: 2rem;
     }
 
-    .field{
-      width:100%;
-      font-size: montserrat(18px, 2vw, 26px);
-      padding: 14px 0;
+    /* --- Inputs & Choices --- */
+    .field-group { margin-top: 2rem; }
+
+    .input-main {
+      width: 100%;
       background: transparent;
       border: none;
-      border-bottom: 1px solid var(--line);
-      color: var(--text);
-      outline:none;
-      transition: border-color 180ms ease;
+      border-bottom: 2px solid var(--line);
+      padding: 1rem 0;
+      font-size: 1.5rem;
+      color: var(--gold);
+      outline: none;
+      transition: border-color 0.4s var(--ease);
+      font-family: inherit;
     }
-    .field::placeholder{ color: rgba(242,242,242,.28); }
-    .field:focus{ border-bottom-color: var(--gold); }
 
-    .btn{
-      margin-top: 28px;
-      padding: 12px 22px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: var(--gold);
-      color: #0E0F11;
+    .input-main:focus { border-bottom-color: var(--gold); }
+
+    .options {
+      display: grid;
+      gap: 12px;
+      margin-top: 1rem;
+    }
+
+    .opt {
+      background: var(--glass);
+      border: 1px solid var(--line);
+      padding: 1.2rem;
+      border-radius: 12px;
+      color: rgba(255,255,255,0.8);
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    .opt:hover { background: rgba(255,255,255,0.06); border-color: var(--accent); }
+    .opt.selected { 
+      background: var(--gold); 
+      color: #000; 
+      border-color: var(--gold);
       font-weight: 600;
-      cursor:pointer;
-      transition: opacity 160ms ease, transform 120ms ease;
-      box-shadow: 0 12px 34px rgba(0,0,0,.35);
-    }
-    .btn:hover{ opacity:.92; }
-    .btn:active{ transform: scale(.985); }
-
-    /* Choices minimalistas */
-    .options{ display:flex; flex-direction:column; gap:12px; margin-top: 6px; }
-    .opt{
-      text-align:left;
-      padding:14px 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.02);
-      color: rgba(242,242,242,.92);
-      cursor:pointer;
-      transition: border-color .18s, transform .12s, background .18s;
-    }
-    .opt:hover{ border-color: rgba(230,211,163,.40); }
-    .opt:active{ transform: scale(.99); }
-    .opt.selected{
-      border-color: rgba(230,211,163,.88);
-      background: rgba(230,211,163,.08);
+      transform: scale(1.02);
     }
 
-    /* Slides */
-    .slide{ transition: opacity 240ms ease, transform 240ms ease; opacity:1; transform: translateY(0); }
-    .out{ opacity:0; transform: translateY(-6px); }
-    .in{ opacity:0; transform: translateY(10px); }
+    /* --- Botões --- */
+    .btn-wrap { margin-top: 3rem; }
 
-    .shake{ animation: shake 220ms ease-in-out; }
-    @keyframes shake{
-      0%{ transform: translateX(0); }
-      35%{ transform: translateX(-6px); }
-      70%{ transform: translateX(5px); }
-      100%{ transform: translateX(0); }
+    .btn {
+      background: var(--gold);
+      color: #000;
+      border: none;
+      padding: 1.2rem 3rem;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      box-shadow: 0 10px 30px rgba(230,211,163,0.2);
     }
 
-    @media (max-width: 520px){
-      .p{ font-size: 16px; }
-      .btn{ width: 100%; }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(230,211,163,0.4); opacity: 0.95; }
+    .btn:active { transform: translateY(0); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--accent);
+      margin-right: 1rem;
+    }
+
+    /* Erro */
+    .shake { animation: shake 0.4s var(--ease); }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      .input-main { font-size: 1.2rem; }
     }
   </style>
 </head>
 
 <body>
-  <div class="bg-base"></div>
-  <div class="stars"></div>
-  <div class="stars2"></div>
-  <div class="nebula"></div>
+  <div class="space"><div class="nebula"></div></div>
+  <div class="progress-container"><div id="progress-bar"></div></div>
 
-  <main class="wrap" id="app">
-    <!-- INTRO -->
-    <section id="intro" class="slide">
-      <h1 class="q">Diagnóstico estratégico de posicionamento digital</h1>
-      <p class="p">
-        Este diagnóstico é indicado para profissionais que já têm autoridade no offline, mas sentem que isso não está sendo traduzido no digital.
-      <p class="p">
-        <br>Leva menos de 3 minutos.
-      <button class="btn" id="start">Começar</button>
+  <main class="wrap">
+    <section id="intro" class="slide active">
+      <h1>Diagnóstico Estratégico de <strong>Posicionamento Digital</strong></h1>
+      <p class="p">Para profissionais de autoridade que buscam alinhar sua presença digital ao nível de sua excelência offline.</p>
+      <div class="btn-wrap">
+        <button class="btn" onclick="start()">Começar Diagnóstico</button>
+      </div>
     </section>
 
-    <!-- FORM -->
-    <section id="form" class="slide" style="display:none;">
-      <h1 class="q" id="q"></h1>
-      <div id="fieldWrap"></div>
-      <button class="btn" id="next">Próximo</button>
+    <section id="form-step" class="slide">
+      <h1 id="question-label">Carregando...</h1>
+      <div id="field-area"></div>
+      <div class="btn-wrap">
+        <button class="btn" id="next-btn">Próximo</button>
+      </div>
     </section>
 
-    <!-- FINAL -->
-    <section id="final" class="slide" style="display:none;">
-      <h1 class="q">Obrigado pelas respostas.</h1>
-      <p class="p">Se você for selecionado, eu entrarei em contato via WhatsApp com os próximos passos. Até mais.</p>
+    <section id="final" class="slide">
+      <h1>Análise em <strong>Processamento</strong></h1>
+      <p class="p">Obrigado pela confiança. Caso seu perfil seja selecionado, entrarei em contato via WhatsApp para os próximos passos.</p>
     </section>
   </main>
 
   <script>
-    // ✅ Endpoint /exec (Apps Script)
-    const ENDPOINT_URL =
-      "https://script.google.com/macros/s/AKfycbxooOXSBwH-i9KtSnMTpymqdmtm-94_XZBsKHWqc15JLeIK8b_OsNKSEeP78557DOP0/exec";
+    const ENDPOINT_URL = "SUA_URL_AQUI"; // Mantenha sua URL do Apps Script
 
-    // ✅ Perguntas (inclui momento + investimento)
     const QUESTIONS = [
-      { id:"nome", label:"Nome e sobrenome", type:"text", required:true, kind:"input" },
-      { id:"area", label:"Área de atuação", type:"text", required:true, kind:"input" },
-      { id:"tempo", label:"Tempo de mercado", type:"text", required:true, kind:"input" },
-
+      { id:"nome", label:"Qual seu **nome completo**?", type:"text", required:true, kind:"input" },
+      { id:"area", label:"Qual sua **área de atuação**?", type:"text", required:true, kind:"input" },
+      { id:"tempo", label:"Há quanto **tempo** atua no mercado?", type:"text", required:true, kind:"input" },
       {
-        id:"momento atual",
-        label:"Qual situação mais descreve seu momento atual no digital?",
+        id:"momento",
+        label:"Qual situação melhor descreve seu **momento atual**?",
         required:true,
         kind:"choice",
         options:[
           "Meu posicionamento não acompanha o nível do meu serviço",
-          "Meu perfil parece genérico perto de concorrentes menos experientes",
-          "Atraio pessoas fora do meu perfil de cliente ideal",
-          "Tenho autoridade no mundo real, mas isso não é percebido no Instagram"
+          "Meu perfil parece genérico perto da concorrência",
+          "Atraio o público errado (curiosos)",
+          "Tenho autoridade offline, mas sou invisível no digital"
         ]
       },
-
-      { id:"perfil", label:"Qual o @ do seu Instagram?", type:"url", required:true, kind:"input" },
-      { id:"problema", label:"Qual o principal gargalo do seu Instagram hoje?", type:"text", required:true, kind:"input" },
-      { id:"ticket", label:"Ticket médio do seu serviço", type:"text", required:true, kind:"input" },
-
-      },
-
-      { id:"Porque minha ajuda", label:"Por que você acredita que este é o momento certo para elevar seu posicionamento digital?", type:"url", required:true, kind:"input" },
-
+      { id:"perfil", label:"Qual o seu **@ do Instagram**?", type:"text", required:true, kind:"input" },
+      { id:"problema", label:"Qual seu maior **obstáculo** hoje?", type:"text", required:true, kind:"input" },
+      { id:"ticket", label:"Qual seu **ticket médio** hoje?", type:"text", required:true, kind:"input" },
+      { id:"porque", label:"Por que este é o **momento certo** para mudar?", type:"text", required:true, kind:"input" },
       {
         id:"invest",
-        label:"Quanto você pretende investir por mês no seu posicionamento digital?",
+        label:"Quanto pretende **investir mensalmente** no seu posicionamento?",
         required:true,
         kind:"choice",
         options:[
@@ -259,147 +252,110 @@
           "R$ +7.000/mês"
         ]
       },
-
-      { id:"whatsapp", label:"Em qual número do WhatsApp eu posso entrar em contato com você?", type:"tel", required:true, kind:"input" }
+      { id:"whatsapp", label:"Seu melhor **WhatsApp** (com DDD):", type:"tel", required:true, kind:"input" }
     ];
 
-    // DOM
-    const intro = document.getElementById("intro");
-    const form  = document.getElementById("form");
-    const final = document.getElementById("final");
-
-    const qEl = document.getElementById("q");
-    const fieldWrap = document.getElementById("fieldWrap");
-
-    const startBtn = document.getElementById("start");
-    const nextBtn = document.getElementById("next");
-
-    let i = 0;
+    let currentStep = 0;
     const answers = {};
 
-    function hide(el){ el.style.display = "none"; }
-    function show(el){ el.style.display = "block"; }
-
-    function transitionOut(el){
-      el.classList.add("out");
-      return new Promise(r => setTimeout(r, 240));
-    }
-    function transitionIn(el){
-      el.classList.remove("out");
-      el.classList.add("in");
-      void el.offsetWidth;
-      el.classList.remove("in");
+    function updateProgress() {
+      const percent = (currentStep / QUESTIONS.length) * 100;
+      document.getElementById('progress-bar').style.width = percent + '%';
     }
 
-    function renderQuestion(){
-      const q = QUESTIONS[i];
-      qEl.textContent = q.label;
-      fieldWrap.innerHTML = "";
+    function start() {
+      showStep('form-step');
+      renderQuestion();
+    }
 
-      if (q.kind === "choice") {
-        const box = document.createElement("div");
-        box.className = "options";
+    function renderQuestion() {
+      updateProgress();
+      const q = QUESTIONS[currentStep];
+      const labelEl = document.getElementById('question-label');
+      const areaEl = document.getElementById('field-area');
+      
+      // Formata o label (suporta asteriscos para negrito)
+      labelEl.innerHTML = q.label.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      areaEl.innerHTML = '';
 
-        const current = answers[q.id] || "";
-
-        q.options.forEach((txt) => {
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "opt" + (txt === current ? " selected" : "");
-          btn.textContent = txt;
-
-          btn.onclick = () => {
-            answers[q.id] = txt;
-            [...box.querySelectorAll(".opt")].forEach(b => b.classList.remove("selected"));
-            btn.classList.add("selected");
+      if (q.kind === 'choice') {
+        const group = document.createElement('div');
+        group.className = 'options';
+        q.options.forEach(opt => {
+          const b = document.createElement('button');
+          b.className = 'opt' + (answers[q.id] === opt ? ' selected' : '');
+          b.textContent = opt;
+          b.onclick = () => {
+            answers[q.id] = opt;
+            [...group.children].forEach(c => c.classList.remove('selected'));
+            b.classList.add('selected');
+            setTimeout(next, 400); // Auto-next suave
           };
-
-          box.appendChild(btn);
+          group.appendChild(b);
         });
+        areaEl.appendChild(group);
+      } else {
+        const input = document.createElement('input');
+        input.className = 'input-main';
+        input.type = q.type;
+        input.placeholder = 'Escreva aqui...';
+        input.value = answers[q.id] || '';
+        input.onkeydown = (e) => { if(e.key === 'Enter') next(); };
+        areaEl.appendChild(input);
+        setTimeout(() => input.focus(), 400);
+      }
+    }
 
-        fieldWrap.appendChild(box);
+    function next() {
+      const q = QUESTIONS[currentStep];
+      let val = answers[q.id];
+
+      if (q.kind === 'input') {
+        val = document.querySelector('.input-main').value.trim();
+        answers[q.id] = val;
+      }
+
+      if (q.required && !val) {
+        document.getElementById('form-step').classList.add('shake');
+        setTimeout(() => document.getElementById('form-step').classList.remove('shake'), 400);
         return;
       }
 
-      const input = document.createElement("input");
-      input.className = "field";
-      input.id = "a";
-      input.type = q.type || "text";
-      input.placeholder = "Digite aqui";
-      input.autocomplete = "off";
-      input.value = answers[q.id] || "";
-
-      input.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") { e.preventDefault(); goNext(); }
-      });
-
-      fieldWrap.appendChild(input);
-      setTimeout(() => input.focus(), 60);
-    }
-
-    async function start(){
-      await transitionOut(intro);
-      hide(intro);
-      show(form);
-      transitionIn(form);
-      i = 0;
-      renderQuestion();
-    }
-
-    function nudgeInvalid(){
-      form.classList.add("shake");
-      setTimeout(() => form.classList.remove("shake"), 240);
-    }
-
-    async function goNext(){
-      const q = QUESTIONS[i];
-
-      if (q.kind === "choice") {
-        const v = (answers[q.id] || "").trim();
-        if (q.required && !v) { nudgeInvalid(); return; }
+      if (currentStep < QUESTIONS.length - 1) {
+        currentStep++;
+        const el = document.getElementById('form-step');
+        el.style.animation = 'none';
+        void el.offsetWidth;
+        el.style.animation = 'fadeIn 0.6s var(--ease) forwards';
+        renderQuestion();
       } else {
-        const input = document.getElementById("a");
-        const v = (input?.value || "").trim();
-        if (q.required && !v) { input?.classList.add("shake"); setTimeout(()=>input?.classList.remove("shake"),220); return; }
-        answers[q.id] = v;
+        finish();
       }
-
-      i++;
-      if (i >= QUESTIONS.length) { await finish(); return; }
-
-      await transitionOut(form);
-      renderQuestion();
-      transitionIn(form);
     }
 
-    async function finish(){
-      await transitionOut(form);
-      hide(form);
-      show(final);
-      transitionIn(final);
+    function showStep(id) {
+      document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
 
-      // ✅ Envio compatível (Apps Script + GitHub Pages)
-      try{
-        const payload = {
-          submittedAt: new Date().toISOString(),
-          ...answers
-        };
+    async function finish() {
+      showStep('final');
+      updateProgress();
+      document.getElementById('progress-bar').style.width = '100%';
 
-        const body = new URLSearchParams(payload).toString();
-
+      const payload = { submittedAt: new Date().toLocaleString(), ...answers };
+      
+      try {
         await fetch(ENDPOINT_URL, {
           method: "POST",
           mode: "no-cors",
-          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-          body
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(payload).toString()
         });
-      }catch(e){
-        // silêncio total (premium)
-      }
+      } catch(e) { console.error("Erro no envio", e); }
     }
 
-    startBtn.addEventListener("click", start);
-    nextBtn.addEventListener("click", goNext);
+    document.getElementById('next-btn').addEventListener('click', next);
   </script>
 </body>
 </html>
