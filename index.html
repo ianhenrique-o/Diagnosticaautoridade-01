@@ -1,530 +1,529 @@
-<!DOCTYPE html>
-<html lang="pt-br" class="h-full bg-[#0b0b0f]">
+<!doctype html>
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Diagnóstico Estratégico de Posicionamento Digital</title>
+  <title>Diagnóstico Estratégico — Posicionamento Digital</title>
+
+  <!-- Fonte -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
+          fontFamily: { sans: ["Inter", "system-ui", "sans-serif"] },
           colors: {
-            bg: {
-              900: "#0b0b0f",
-              800: "#101018",
-              700: "#141423",
-              600: "#1b1b2d"
+            ink: {
+              950: "#0B0D10",   // quase preto
+              900: "#0F1216",
+              800: "#14181E",
+              700: "#1B2028",
+            },
+            paper: {
+              50:  "#F6F7F9",   // branco opaco
+              100: "#EEF0F3",
+              200: "#D8DDE4",
             },
             gold: {
-              500: "#E7D3A7",
-              600: "#D8C08E",
-              700: "#C7AE79"
-            },
-            ink: {
-              50: "#F5F7FB",
-              200: "#C9CEDA",
-              300: "#A9B0C0",
-              400: "#7D8597",
-              600: "#50586A",
-              800: "#2A2F3B"
+              200: "#F5E8C8",   // dourado claro
+              300: "#E8D6AA",
+              400: "#DCC398",
             }
           },
           boxShadow: {
-            soft: "0 10px 30px rgba(0,0,0,.35)",
-            glow: "0 0 0 1px rgba(231,211,167,.18), 0 30px 80px rgba(0,0,0,.55)"
+            glow: "0 0 0 1px rgba(245,232,200,0.14), 0 18px 60px rgba(0,0,0,0.55)",
           }
         }
       }
-    };
+    }
   </script>
-</head>
-
-<body class="h-full text-ink-50 antialiased">
-  <div class="min-h-full">
-    <header class="px-6 pt-10 pb-6">
-      <div class="mx-auto max-w-5xl">
-        <div class="flex flex-col gap-3">
-          <div class="inline-flex items-center gap-2 text-xs text-ink-300">
-            <span class="h-1.5 w-1.5 rounded-full bg-gold-600"></span>
-            Aplicação por seleção • Não é curso • Não é social media operacional
-          </div>
-
-          <h1 class="text-2xl md:text-4xl font-semibold tracking-tight">
-            Diagnóstico Estratégico de Posicionamento Digital
-          </h1>
-
-          <p class="text-ink-200 max-w-3xl leading-relaxed">
-            Aplicação exclusiva para profissionais liberais e autônomos que já têm autoridade no offline,
-            mas sentem que o Instagram não sustenta o nível do serviço e do preço.
-          </p>
-
-          <div class="mt-4 rounded-2xl bg-bg-800 shadow-glow border border-white/5 p-5">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-              <div class="text-sm text-ink-200">
-                Tempo estimado: <span class="text-ink-50 font-medium">2–3 minutos</span> •
-                Respostas objetivas aumentam chance de seleção.
-              </div>
-              <div class="text-xs text-ink-300">
-                Critério: foco em posicionamento, percepção de valor e cliente ideal.
-              </div>
-            </div>
-
-            <div class="mt-5">
-              <div class="flex items-center justify-between text-xs text-ink-300">
-                <span id="progressLabel">Etapa 1 de 4</span>
-                <span id="progressPct">0%</span>
-              </div>
-              <div class="mt-2 h-2 w-full rounded-full bg-white/5 overflow-hidden">
-                <div id="progressBar" class="h-full w-0 rounded-full bg-gold-600 transition-all duration-500"></div>
-              </div>
-            </div>
-          </div>
-
-          <div id="alertBox" class="hidden mt-4 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-100">
-            <strong class="font-semibold">Atenção:</strong>
-            <span id="alertText">revise os campos destacados.</span>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <main class="px-6 pb-16">
-      <div class="mx-auto max-w-5xl">
-        <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6">
-          <!-- FORM CARD -->
-          <section class="rounded-2xl bg-bg-800 shadow-soft border border-white/5 p-6 md:p-8">
-            <form id="appForm" class="space-y-6" novalidate>
-              <!-- STEP 1 -->
-              <div class="step" data-step="1">
-                <div class="flex items-center justify-between">
-                  <h2 class="text-lg md:text-xl font-semibold">Qualificação profissional</h2>
-                  <span class="text-xs text-ink-300">Obrigatório</span>
-                </div>
-
-                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label class="text-sm text-ink-200">Nome e sobrenome</label>
-                    <input name="nome" required
-                      class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 placeholder:text-ink-400 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10"
-                      placeholder="Ex: Ana Souza" />
-                    <p class="mt-1 text-xs text-ink-400">Sem abreviações.</p>
-                  </div>
-
-                  <div>
-                    <label class="text-sm text-ink-200">Área de atuação</label>
-                    <input name="area" required
-                      class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 placeholder:text-ink-400 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10"
-                      placeholder="Ex: Medicina, Advocacia, Consultoria..." />
-                  </div>
-
-                  <div>
-                    <label class="text-sm text-ink-200">Tempo de mercado</label>
-                    <select name="tempo" required
-                      class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10">
-                      <option value="" disabled selected>Selecione</option>
-                      <option>Menos de 5 anos</option>
-                      <option>5 a 10 anos</option>
-                      <option>Mais de 10 anos</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label class="text-sm text-ink-200">Perfil no Instagram (ou site)</label>
-                    <input name="perfil" required
-                      class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 placeholder:text-ink-400 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10"
-                      placeholder="https://instagram.com/seuperfil" />
-                    <p class="mt-1 text-xs text-ink-400">Coloque o link direto.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- STEP 2 -->
-              <div class="step hidden" data-step="2">
-                <div class="flex items-center justify-between">
-                  <h2 class="text-lg md:text-xl font-semibold">Diagnóstico do problema</h2>
-                  <span class="text-xs text-ink-300">Obrigatório</span>
-                </div>
-
-                <div class="mt-4 space-y-5">
-                  <div class="rounded-2xl bg-bg-700/60 border border-white/5 p-5">
-                    <p class="text-sm text-ink-200">
-                      Hoje, o seu Instagram ajuda ou atrapalha a percepção de valor do seu serviço?
-                    </p>
-                    <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                      <label class="choice">
-                        <input type="radio" name="impacto" value="Ajuda" required />
-                        <span>Ajuda</span>
-                      </label>
-                      <label class="choice">
-                        <input type="radio" name="impacto" value="Não ajuda" required />
-                        <span>Não ajuda</span>
-                      </label>
-                      <label class="choice">
-                        <input type="radio" name="impacto" value="Atrapalha" required />
-                        <span>Atrapalha</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="rounded-2xl bg-bg-700/60 border border-white/5 p-5">
-                    <p class="text-sm text-ink-200">
-                      Qual dessas situações mais descreve seu momento atual no digital?
-                    </p>
-                    <div class="mt-4 space-y-3">
-                      <label class="choice block">
-                        <input type="radio" name="dor" value="Meu posicionamento não acompanha o nível do meu serviço" required />
-                        <span>Meu posicionamento não acompanha o nível do meu serviço</span>
-                      </label>
-                      <label class="choice block">
-                        <input type="radio" name="dor" value="Meu perfil parece genérico perto de concorrentes menos experientes" required />
-                        <span>Meu perfil parece genérico perto de concorrentes menos experientes</span>
-                      </label>
-                      <label class="choice block">
-                        <input type="radio" name="dor" value="Atraio pessoas fora do meu perfil de cliente ideal" required />
-                        <span>Atraio pessoas fora do meu perfil de cliente ideal</span>
-                      </label>
-                      <label class="choice block">
-                        <input type="radio" name="dor" value="Tenho autoridade real, mas isso não é percebido no Instagram" required />
-                        <span>Tenho autoridade real, mas isso não é percebido no Instagram</span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- STEP 3 -->
-              <div class="step hidden" data-step="3">
-                <div class="flex items-center justify-between">
-                  <h2 class="text-lg md:text-xl font-semibold">Qualificação financeira</h2>
-                  <span class="text-xs text-ink-300">Obrigatório</span>
-                </div>
-
-                <div class="mt-4 space-y-5">
-                  <div class="rounded-2xl bg-bg-700/60 border border-white/5 p-5">
-                    <p class="text-sm text-ink-200">
-                      Este diagnóstico e eventual acompanhamento estratégico são indicados para profissionais que tratam posicionamento como investimento, não como custo.
-                    </p>
-                  </div>
-
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label class="text-sm text-ink-200">Ticket médio do seu serviço</label>
-                      <select name="ticket" required
-                        class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10">
-                        <option value="" disabled selected>Selecione</option>
-                        <option>Até R$ 3.000</option>
-                        <option>R$ 3.000 a R$ 7.000</option>
-                        <option>Acima de R$ 7.000</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label class="text-sm text-ink-200">Investimento mensal em posicionamento</label>
-                      <select name="investimento" required
-                        class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10">
-                        <option value="" disabled selected>Selecione</option>
-                        <option>Entre R$ 3.000 e R$ 5.000</option>
-                        <option>Entre R$ 5.000 e R$ 10.000</option>
-                        <option>Acima de R$ 10.000</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="rounded-2xl bg-bg-700/60 border border-white/5 p-5">
-                    <label class="text-sm text-ink-200">
-                      Se o seu posicionamento digital continuar exatamente como está, o que tende a acontecer?
-                    </label>
-                    <textarea name="consequencia" required rows="4"
-                      class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 placeholder:text-ink-400 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10"
-                      placeholder="Seja objetivo. Ex: vou continuar atraindo cliente errado, tendo que justificar preço, etc."></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <!-- STEP 4 -->
-              <div class="step hidden" data-step="4">
-                <div class="flex items-center justify-between">
-                  <h2 class="text-lg md:text-xl font-semibold">Contato e seleção</h2>
-                  <span class="text-xs text-ink-300">Obrigatório</span>
-                </div>
-
-                <div class="mt-4 space-y-4">
-                  <div>
-                    <label class="text-sm text-ink-200">WhatsApp para agendamento</label>
-                    <input name="whatsapp" required inputmode="tel"
-                      class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 placeholder:text-ink-400 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10"
-                      placeholder="(DDD) 9xxxx-xxxx" />
-                    <p class="mt-1 text-xs text-ink-400">Você só será contatado se for selecionado.</p>
-                  </div>
-
-                  <div class="rounded-2xl bg-bg-700/60 border border-white/5 p-5">
-                    <p class="text-sm text-ink-200">
-                      Ao enviar, você confirma que entende que esta é uma aplicação por seleção e que nem todo perfil avançará para reunião.
-                    </p>
-                    <label class="mt-4 inline-flex items-start gap-3">
-                      <input type="checkbox" name="consent" required class="mt-1 h-4 w-4 accent-[#D8C08E]" />
-                      <span class="text-sm text-ink-200">Entendi e concordo.</span>
-                    </label>
-                  </div>
-
-                  <div id="finalBox" class="hidden rounded-2xl border border-gold-600/25 bg-gold-600/10 p-5">
-                    <p class="text-sm text-ink-50">
-                      Aplicação enviada. Se seu perfil for selecionado, você receberá mensagem no WhatsApp.
-                    </p>
-                    <p class="mt-2 text-xs text-ink-200">
-                      Dica: copie seus dados abaixo (para referência).
-                    </p>
-                    <pre id="jsonOut" class="mt-3 text-xs whitespace-pre-wrap break-words text-ink-50/90 bg-black/20 rounded-xl p-4 border border-white/5"></pre>
-                  </div>
-                </div>
-              </div>
-
-              <!-- NAV -->
-              <div class="pt-2 flex items-center justify-between gap-3">
-                <button type="button" id="backBtn"
-                  class="hidden rounded-xl border border-white/10 px-4 py-3 text-sm text-ink-200 hover:bg-white/5 transition">
-                  Voltar
-                </button>
-
-                <div class="ml-auto flex items-center gap-3">
-                  <button type="button" id="saveBtn"
-                    class="rounded-xl border border-white/10 px-4 py-3 text-sm text-ink-200 hover:bg-white/5 transition">
-                    Salvar rascunho
-                  </button>
-
-                  <button type="button" id="nextBtn"
-                    class="rounded-xl bg-gold-600 px-5 py-3 text-sm font-medium text-bg-900 hover:bg-gold-500 transition shadow-soft">
-                    Próximo
-                  </button>
-
-                  <button type="submit" id="submitBtn"
-                    class="hidden rounded-xl bg-gold-600 px-5 py-3 text-sm font-medium text-bg-900 hover:bg-gold-500 transition shadow-soft">
-                    Enviar aplicação
-                  </button>
-                </div>
-              </div>
-            </form>
-          </section>
-
-          <!-- SIDE PANEL -->
-          <aside class="rounded-2xl bg-bg-800 shadow-soft border border-white/5 p-6 h-fit">
-            <h3 class="font-semibold">Como eu uso isso</h3>
-            <p class="mt-2 text-sm text-ink-200 leading-relaxed">
-              Esse formulário existe para filtrar e dar contexto.
-              Ele não substitui conversa. Ele economiza seu tempo e aumenta sua autoridade.
-            </p>
-
-            <div class="mt-5 rounded-xl bg-bg-700/60 border border-white/5 p-4">
-              <p class="text-xs text-ink-300">Seleção tende a priorizar:</p>
-              <ul class="mt-2 text-sm text-ink-200 space-y-2">
-                <li>• 5+ anos de mercado</li>
-                <li>• Dor clara (perfil genérico / cliente errado / percepção baixa)</li>
-                <li>• Investimento mensal compatível</li>
-                <li>• Resposta objetiva sobre consequência</li>
-              </ul>
-            </div>
-
-            <div class="mt-5 text-xs text-ink-400">
-              Observação: se você quiser receber isso em uma planilha automaticamente,
-              conecte um endpoint no código (instrução no final).
-            </div>
-          </aside>
-        </div>
-      </div>
-    </main>
-  </div>
 
   <style>
-    .choice {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(20,20,35,.55);
-      cursor: pointer;
-      transition: all .15s ease;
-      user-select: none;
+    :root { color-scheme: dark; }
+    .grain {
+      background-image:
+        radial-gradient(1200px 600px at 20% 0%, rgba(245,232,200,0.08), transparent 60%),
+        radial-gradient(1000px 700px at 90% 10%, rgba(255,255,255,0.06), transparent 55%),
+        radial-gradient(900px 500px at 50% 100%, rgba(245,232,200,0.06), transparent 60%);
     }
-    .choice:hover { background: rgba(255,255,255,.06); }
-    .choice input { accent-color: #D8C08E; }
-    .invalid {
-      border-color: rgba(239,68,68,.55) !important;
-      box-shadow: 0 0 0 2px rgba(239,68,68,.12);
+    .card-border {
+      background: linear-gradient(180deg, rgba(245,232,200,0.10), rgba(255,255,255,0.04));
+      padding: 1px;
+      border-radius: 20px;
+    }
+    .card {
+      border-radius: 19px;
+      background: rgba(15,18,22,0.78);
+      backdrop-filter: blur(10px);
+    }
+    .fade-slide-in {
+      animation: fadeSlideIn 420ms cubic-bezier(.2,.8,.2,1) both;
+    }
+    .fade-slide-out {
+      animation: fadeSlideOut 240ms cubic-bezier(.4,0,.2,1) both;
+    }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeSlideOut {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-6px); }
+    }
+    .soft-ring:focus {
+      outline: none;
+      box-shadow:
+        0 0 0 1px rgba(245,232,200,0.18),
+        0 0 0 4px rgba(245,232,200,0.10);
     }
   </style>
+</head>
+
+<body class="min-h-screen font-sans text-paper-50 bg-ink-950 grain">
+  <div class="min-h-screen px-5 py-8 md:py-14">
+    <div class="mx-auto w-full max-w-3xl">
+      <!-- Topo minimalista -->
+      <div class="flex items-start justify-between gap-6 mb-10">
+        <div class="space-y-3">
+          <div class="text-[12px] md:text-sm text-paper-200/70 tracking-wide">
+            Aplicação por seleção • 2–3 minutos • Respostas objetivas aumentam chance de seleção
+          </div>
+          <h1 class="text-3xl md:text-[44px] leading-[1.05] font-semibold tracking-tight">
+            Diagnóstico Estratégico de<br class="hidden md:block"> Posicionamento Digital
+          </h1>
+          <p class="text-paper-200/80 text-base md:text-lg leading-relaxed max-w-2xl">
+            Para profissionais experientes que já têm autoridade no offline, mas sentem que o Instagram não sustenta o nível do serviço e do preço.
+          </p>
+        </div>
+        <div class="hidden md:block text-right text-paper-200/70 text-sm leading-snug mt-1">
+          Critério:
+          <div class="text-paper-50/80">posicionamento • percepção de valor • cliente ideal</div>
+        </div>
+      </div>
+
+      <!-- Card principal -->
+      <div class="card-border shadow-glow">
+        <div class="card p-6 md:p-8">
+          <!-- progresso -->
+          <div class="flex items-center justify-between mb-5">
+            <div class="text-sm md:text-base text-paper-200/80">
+              <span class="text-gold-200 font-medium">Etapa</span>
+              <span id="progressText" class="ml-2">1 de 1</span>
+            </div>
+            <div id="etaText" class="text-sm md:text-base text-paper-200/60">
+              rápido (2–3 min)
+            </div>
+          </div>
+          <div class="h-[6px] w-full bg-white/5 rounded-full overflow-hidden mb-7">
+            <div id="progressBar" class="h-full bg-gold-200/90 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+          </div>
+
+          <!-- Conteúdo -->
+          <div id="stage" class="fade-slide-in">
+            <div class="flex items-start justify-between gap-4 mb-4">
+              <div class="text-paper-200/60 text-sm md:text-base" id="sectionLabel">Pergunta</div>
+              <div class="text-paper-200/60 text-sm md:text-base" id="stepLabel">1/1</div>
+            </div>
+
+            <h2 id="questionTitle" class="text-xl md:text-3xl font-semibold tracking-tight leading-tight mb-4">
+              ...
+            </h2>
+
+            <p id="questionHint" class="text-paper-200/70 text-sm md:text-base leading-relaxed mb-6 hidden">
+              ...
+            </p>
+
+            <!-- Campo -->
+            <div id="fieldWrap" class="space-y-2 mb-8">
+              <!-- renderizado via JS -->
+            </div>
+
+            <!-- Ações -->
+            <div class="flex items-center justify-between gap-3">
+              <button id="backBtn"
+                class="px-4 md:px-5 py-3 rounded-xl border border-white/10 text-paper-200/80 hover:text-paper-50 hover:border-white/20 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                disabled
+              >
+                Voltar
+              </button>
+
+              <div class="flex items-center gap-3">
+                <button id="saveDraftBtn"
+                  class="hidden md:inline-flex px-4 md:px-5 py-3 rounded-xl border border-white/10 text-paper-200/80 hover:text-paper-50 hover:border-white/20 transition"
+                  type="button"
+                  title="Salva no seu navegador (rascunho)"
+                >
+                  Salvar rascunho
+                </button>
+
+                <button id="nextBtn"
+                  class="px-5 md:px-6 py-3 rounded-xl bg-gold-200 text-ink-950 font-semibold hover:bg-gold-300 transition active:scale-[0.99]"
+                >
+                  Próximo
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-5 text-paper-200/50 text-xs md:text-sm">
+              Ao enviar, você confirma que as informações serão usadas apenas para análise e retorno do diagnóstico.
+            </div>
+          </div>
+
+          <!-- Tela final -->
+          <div id="finalStage" class="hidden">
+            <div class="text-center py-8 md:py-10">
+              <div class="mx-auto mb-5 w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                <svg class="w-7 h-7 text-gold-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20 7L9 18l-5-5" />
+                </svg>
+              </div>
+
+              <h3 class="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
+                Respostas enviadas.
+              </h3>
+              <p class="text-paper-200/75 text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-8">
+                Obrigado por responder com objetividade. Se você for selecionado, eu vou te chamar no <span class="text-paper-50/90 font-medium">WhatsApp</span> com os próximos passos.
+              </p>
+
+              <a id="whatsBtn" href="#" target="_blank" rel="noopener"
+                 class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-gold-200 text-ink-950 font-semibold hover:bg-gold-300 transition">
+                Falar no WhatsApp (opcional)
+              </a>
+
+              <div id="sendStatus" class="mt-5 text-sm text-paper-200/60"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rodapé micro -->
+      <div class="mt-8 text-paper-200/45 text-xs md:text-sm">
+        Observação: você pode conectar um endpoint para salvar tudo em planilha automaticamente (configuração no código).
+      </div>
+    </div>
+  </div>
 
   <script>
-    const form = document.getElementById("appForm");
-    const steps = Array.from(document.querySelectorAll(".step"));
-    const nextBtn = document.getElementById("nextBtn");
-    const backBtn = document.getElementById("backBtn");
-    const saveBtn = document.getElementById("saveBtn");
-    const submitBtn = document.getElementById("submitBtn");
-    const progressBar = document.getElementById("progressBar");
-    const progressLabel = document.getElementById("progressLabel");
-    const progressPct = document.getElementById("progressPct");
-    const alertBox = document.getElementById("alertBox");
-    const alertText = document.getElementById("alertText");
-    const finalBox = document.getElementById("finalBox");
-    const jsonOut = document.getElementById("jsonOut");
+    /**
+     * ============================
+     * 1) COLE A URL DO SEU WEB APP AQUI (Google Apps Script)
+     * ============================
+     * Ex: https://script.google.com/macros/s/AKfycbxxxx/exec
+     */
+    const ENDPOINT_URL = "COLE_A_URL_DO_WEB_APP_AQUI";
 
-    const STORAGE_KEY = "ian_diag_draft_v1";
-    let currentStep = 1;
-    const totalSteps = steps.length;
+    /**
+     * WhatsApp opcional (botão da tela final).
+     * Formato: https://wa.me/55DDDNUMERO?text=...
+     */
+    const WHATSAPP_LINK = "https://wa.me/55SEUNUMEROAQUI?text=Oi%20Ian%2C%20enviei%20meu%20diagn%C3%B3stico%20e%20quero%20entender%20os%20pr%C3%B3ximos%20passos.";
 
-    function showStep(n) {
-      currentStep = n;
-      steps.forEach(s => s.classList.toggle("hidden", Number(s.dataset.step) !== n));
+    /**
+     * ============================
+     * 2) APENAS AS PERGUNTAS DO FORMULÁRIO (edite aqui)
+     * - Uma por vez
+     * - Objetivas
+     * - Sem firula
+     * ============================
+     */
+    const FORM = [
+      { id: "nome",        label: "Nome e sobrenome", type: "text",  placeholder: "Ex: Ana Souza", required: true },
+      { id: "area",        label: "Área de atuação",   type: "text",  placeholder: "Ex: Medicina, Advocacia, Consultoria", required: true },
+      { id: "tempo",       label: "Tempo de mercado",  type: "select", required: true, options: [
+        "Menos de 2 anos", "2–4 anos", "5–9 anos", "10+ anos"
+      ]},
+      { id: "perfil",      label: "Perfil no Instagram (ou site)", type: "url", placeholder: "Cole o link direto", required: true },
 
-      backBtn.classList.toggle("hidden", n === 1);
-      nextBtn.classList.toggle("hidden", n === totalSteps);
-      submitBtn.classList.toggle("hidden", n !== totalSteps);
+      { id: "situacao", label: "Hoje, qual é o principal sinal de que seu Instagram não sustenta seu preço?", type: "select", required: true, options: [
+        "Atrai público errado (sensível a preço)",
+        "Quase não gera directs de decisão",
+        "Conteúdo não passa autoridade/seriedade",
+        "Visual amador / sem padrão",
+        "Não consigo explicar meu serviço premium rápido"
+      ]},
 
-      const pct = Math.round(((n - 1) / (totalSteps - 1)) * 100);
-      progressBar.style.width = pct + "%";
-      progressLabel.textContent = `Etapa ${n} de ${totalSteps}`;
-      progressPct.textContent = pct + "%";
+      { id: "oferta", label: "O que você vende hoje?", type: "text", placeholder: "Ex: Consultoria, cirurgia, mentoria, serviço recorrente…", required: true },
 
-      alertBox.classList.add("hidden");
-      clearInvalidMarks();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      { id: "ticket", label: "Qual faixa de ticket médio do seu serviço principal?", type: "select", required: true, options: [
+        "Até R$ 1.000", "R$ 1.000–3.000", "R$ 3.000–10.000", "R$ 10.000+"
+      ]},
+
+      { id: "meta", label: "Qual meta mais importante para os próximos 90 dias?", type: "select", required: true, options: [
+        "Aumentar percepção de valor (sem aumentar volume)",
+        "Atrair clientes mais qualificados (menos pechincha)",
+        "Vender um serviço premium com mais constância",
+        "Organizar posicionamento e narrativa",
+        "Criar um funil simples (conteúdo → direct → fechamento)"
+      ]},
+
+      { id: "autoridade_off", label: "Você já tem autoridade no offline?", type: "select", required: true, options: [
+        "Sim, forte (indicados/convites/resultados)", "Sim, moderada", "Ainda estou construindo"
+      ]},
+
+      { id: "conteudo", label: "Qual sua frequência real de conteúdo hoje?", type: "select", required: true, options: [
+        "Quase nunca", "1–2x/semana", "3–4x/semana", "Quase todo dia"
+      ]},
+
+      { id: "investimento", label: "Quanto você conseguiria investir por mês para alinhar seu Instagram ao seu nível?", type: "select", required: true, options: [
+        "R$ 0–500", "R$ 500–1.500", "R$ 1.500–3.000", "R$ 3.000+"
+      ]},
+
+      { id: "whatsapp", label: "Seu WhatsApp (para contato se for selecionado)", type: "tel", placeholder: "DDD + número", required: true },
+    ];
+
+    // ============================
+    // UI / Estado
+    // ============================
+    const $ = (id) => document.getElementById(id);
+
+    const stage = $("stage");
+    const finalStage = $("finalStage");
+    const fieldWrap = $("fieldWrap");
+
+    const questionTitle = $("questionTitle");
+    const questionHint = $("questionHint");
+    const stepLabel = $("stepLabel");
+    const progressText = $("progressText");
+    const progressBar = $("progressBar");
+
+    const backBtn = $("backBtn");
+    const nextBtn = $("nextBtn");
+    const saveDraftBtn = $("saveDraftBtn");
+
+    const whatsBtn = $("whatsBtn");
+    const sendStatus = $("sendStatus");
+
+    let step = 0;
+    let answers = loadDraft() || {};
+
+    whatsBtn.href = WHATSAPP_LINK;
+
+    function pct(n, total) {
+      return Math.max(0, Math.min(100, Math.round((n / total) * 100)));
     }
 
-    function clearInvalidMarks() {
-      form.querySelectorAll(".invalid").forEach(el => el.classList.remove("invalid"));
+    function render() {
+      const total = FORM.length;
+      const q = FORM[step];
+
+      // labels
+      stepLabel.textContent = `${step + 1}/${total}`;
+      progressText.textContent = `${step + 1} de ${total}`;
+      progressBar.style.width = `${pct(step, total - 1)}%`;
+
+      // botões
+      backBtn.disabled = step === 0;
+      nextBtn.textContent = step === total - 1 ? "Enviar" : "Próximo";
+
+      // título
+      questionTitle.textContent = q.label;
+
+      // campo
+      fieldWrap.innerHTML = "";
+      fieldWrap.appendChild(buildField(q));
+
+      // anima
+      stage.classList.remove("fade-slide-out");
+      stage.classList.add("fade-slide-in");
+      setTimeout(() => stage.classList.remove("fade-slide-in"), 450);
+
+      // foco
+      const input = fieldWrap.querySelector("input, select, textarea");
+      if (input) setTimeout(() => input.focus(), 60);
     }
 
-    function markInvalid(el) {
-      if (!el) return;
-      el.classList.add("invalid");
-    }
+    function buildField(q) {
+      const wrap = document.createElement("div");
+      wrap.className = "space-y-2";
 
-    function validateStep(n) {
-      clearInvalidMarks();
-      alertBox.classList.add("hidden");
+      const help = document.createElement("div");
+      help.className = "text-paper-200/55 text-sm md:text-base";
+      help.textContent = q.required ? "Obrigatório" : "Opcional";
+      wrap.appendChild(help);
 
-      const stepEl = steps.find(s => Number(s.dataset.step) === n);
-      const requiredFields = Array.from(stepEl.querySelectorAll("[required]"));
-      let ok = true;
+      let el;
 
-      // For radios/checkboxes, browser validation is inconsistent on step-by-step.
-      const groups = {};
-      requiredFields.forEach(f => {
-        if (f.type === "radio") groups[f.name] = groups[f.name] || { type: "radio", els: [] }, groups[f.name].els.push(f);
-        else if (f.type === "checkbox") groups[f.name] = groups[f.name] || { type: "checkbox", els: [] }, groups[f.name].els.push(f);
-      });
+      if (q.type === "select") {
+        el = document.createElement("select");
+        el.className = baseInputClass();
+        const opt0 = document.createElement("option");
+        opt0.value = "";
+        opt0.textContent = "Selecione";
+        opt0.disabled = true;
+        opt0.selected = !answers[q.id];
+        el.appendChild(opt0);
 
-      // Validate non-radio/checkbox
-      requiredFields.forEach(f => {
-        if (f.type === "radio" || f.type === "checkbox") return;
-        if (!f.value || !f.value.trim()) { ok = false; markInvalid(f); }
-      });
-
-      // Validate groups
-      Object.values(groups).forEach(g => {
-        if (g.type === "radio") {
-          const checked = g.els.some(r => r.checked);
-          if (!checked) { ok = false; g.els.forEach(r => markInvalid(r.closest("label") || r)); }
-        }
-        if (g.type === "checkbox") {
-          const checked = g.els.every(c => c.checked);
-          if (!checked) { ok = false; g.els.forEach(c => markInvalid(c)); }
-        }
-      });
-
-      if (!ok) {
-        alertText.textContent = "revise os campos obrigatórios antes de continuar.";
-        alertBox.classList.remove("hidden");
+        q.options.forEach(v => {
+          const o = document.createElement("option");
+          o.value = v;
+          o.textContent = v;
+          if (answers[q.id] === v) o.selected = true;
+          el.appendChild(o);
+        });
+      } else if (q.type === "textarea") {
+        el = document.createElement("textarea");
+        el.rows = 4;
+        el.className = baseInputClass() + " resize-none";
+        el.placeholder = q.placeholder || "";
+        el.value = answers[q.id] || "";
+      } else {
+        el = document.createElement("input");
+        el.type = q.type || "text";
+        el.className = baseInputClass();
+        el.placeholder = q.placeholder || "";
+        el.value = answers[q.id] || "";
+        if (q.type === "url") el.inputMode = "url";
+        if (q.type === "tel") el.inputMode = "tel";
       }
-      return ok;
+
+      el.id = "field";
+      el.addEventListener("input", () => {
+        answers[q.id] = el.value;
+      });
+      el.addEventListener("change", () => {
+        answers[q.id] = el.value;
+      });
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && q.type !== "textarea") {
+          e.preventDefault();
+          next();
+        }
+      });
+
+      wrap.appendChild(el);
+
+      return wrap;
     }
 
-    function formToJSON() {
-      const fd = new FormData(form);
-      const obj = {};
-      for (const [k, v] of fd.entries()) {
-        // checkbox consent returns "on" when checked
-        obj[k] = v;
+    function baseInputClass() {
+      return [
+        "w-full rounded-xl px-4 py-4 md:px-5 md:py-5",
+        "bg-white/5 border border-white/10",
+        "text-paper-50 placeholder:text-paper-200/40",
+        "text-base md:text-lg",
+        "transition",
+        "soft-ring",
+        "hover:border-white/20"
+      ].join(" ");
+    }
+
+    function validateCurrent() {
+      const q = FORM[step];
+      const v = (answers[q.id] || "").trim();
+      if (!q.required) return true;
+      return v.length > 0;
+    }
+
+    function nudgeInvalid() {
+      const field = $("field");
+      if (!field) return;
+      field.classList.add("border-red-400/60");
+      setTimeout(() => field.classList.remove("border-red-400/60"), 650);
+    }
+
+    function next() {
+      if (!validateCurrent()) {
+        nudgeInvalid();
+        return;
       }
-      // radios unchecked not present; ok.
-      return obj;
+
+      if (step < FORM.length - 1) {
+        stage.classList.add("fade-slide-out");
+        setTimeout(() => {
+          step += 1;
+          render();
+        }, 220);
+        return;
+      }
+
+      // último passo -> enviar
+      submit();
+    }
+
+    function back() {
+      if (step === 0) return;
+      stage.classList.add("fade-slide-out");
+      setTimeout(() => {
+        step -= 1;
+        render();
+      }, 220);
     }
 
     function saveDraft() {
-      const data = formToJSON();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    }
-
-    function loadDraft() {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
       try {
-        const data = JSON.parse(raw);
-        Object.entries(data).forEach(([k, v]) => {
-          const els = form.querySelectorAll(`[name="${CSS.escape(k)}"]`);
-          els.forEach(el => {
-            if (el.type === "radio") el.checked = (el.value === v);
-            else if (el.type === "checkbox") el.checked = (v === "on" || v === true);
-            else el.value = v;
-          });
-        });
+        localStorage.setItem("diag_draft_v1", JSON.stringify(answers));
       } catch {}
     }
 
-    nextBtn.addEventListener("click", () => {
-      if (!validateStep(currentStep)) return;
-      saveDraft();
-      showStep(Math.min(totalSteps, currentStep + 1));
-    });
+    function loadDraft() {
+      try {
+        const raw = localStorage.getItem("diag_draft_v1");
+        return raw ? JSON.parse(raw) : null;
+      } catch {
+        return null;
+      }
+    }
 
-    backBtn.addEventListener("click", () => {
-      showStep(Math.max(1, currentStep - 1));
-    });
+    function clearDraft() {
+      try { localStorage.removeItem("diag_draft_v1"); } catch {}
+    }
 
-    saveBtn.addEventListener("click", () => {
-      saveDraft();
-      alertText.textContent = "rascunho salvo neste dispositivo.";
-      alertBox.classList.remove("hidden");
-      setTimeout(() => alertBox.classList.add("hidden"), 1600);
-    });
+    async function submit() {
+      nextBtn.disabled = true;
+      nextBtn.textContent = "Enviando...";
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (!validateStep(currentStep)) return;
+      // mostra tela final imediatamente (UX premium)
+      stage.classList.add("hidden");
+      finalStage.classList.remove("hidden");
+      finalStage.classList.add("fade-slide-in");
 
-      const data = formToJSON();
-      saveDraft();
+      const payload = {
+        submittedAt: new Date().toISOString(),
+        answers
+      };
 
-      // OPTIONAL: send to an endpoint
-      // 1) Create a webhook (Make/Zapier) or Google Apps Script endpoint
-      // 2) Replace ENDPOINT_URL with your endpoint
-      const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbyPf5t0QFiH75-86pkZx-lT8DIpHXj4pxSZUg-ZaCHcWowu7IgwsZ4zALZtkm0g90ucpQ/exec"; // e.g. "https://YOUR-ENDPOINT"
-      if (ENDPOINT_URL) {
-        try {
-          await fetch(ENDPOINT_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...data, submitted_at: new Date().toISOString() })
-          });
-        } catch (err) {
-          // If endpoint fails, still show JSON so you don't lose the lead.
-          console.warn("Failed to send", err);
-        }
+      // se não colocou endpoint, só finaliza visualmente
+      if (!ENDPOINT_URL || ENDPOINT_URL.includes("COLE_A_URL")) {
+        sendStatus.textContent = "Endpoint não configurado ainda (você pode configurar depois no código).";
+        clearDraft();
+        return;
       }
 
-      finalBox.classList.remove("hidden");
-      jsonOut.textContent = JSON.stringify({ ...data, submitted_at: new Date().toISOString() }, null, 2);
+      try {
+        // POST JSON (Apps Script precisa aceitar JSON; se seu script espera form-urlencoded, eu ajusto)
+        const res = await fetch(ENDPOINT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
 
-      // lock form optionally
-      // Array.from(form.elements).forEach(el => el.disabled = true);
-      // submitBtn.disabled = true;
+        if (!res.ok) throw new Error("Falha no envio");
+        sendStatus.textContent = "Enviado com sucesso.";
+        clearDraft();
+      } catch (err) {
+        sendStatus.textContent = "Não consegui enviar automaticamente agora. Mas suas respostas ficaram salvas localmente — tente recarregar e enviar de novo.";
+        saveDraft();
+      }
+    }
+
+    backBtn.addEventListener("click", back);
+    nextBtn.addEventListener("click", next);
+    saveDraftBtn.addEventListener("click", () => {
+      saveDraft();
+      saveDraftBtn.textContent = "Salvo ✓";
+      setTimeout(() => saveDraftBtn.textContent = "Salvar rascunho", 900);
     });
 
-    loadDraft();
-    showStep(1);
+    // Render inicial
+    render();
+
+    // Autosave leve
+    setInterval(saveDraft, 3000);
   </script>
 </body>
 </html>
