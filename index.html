@@ -1,218 +1,530 @@
 <!DOCTYPE html>
-<html lang="pt-br" class="h-full bg-[#121212]">
+<html lang="pt-br" class="h-full bg-[#0b0b0f]">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnóstico de Autoridade Digital</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Configuração de cores personalizadas para o tom "Premium Dark"
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            dark: '#1A1A1A', // Cinza chumbo profundo
-                            light: '#F3F4F6', // Branco opaco/gelo
-                            gold: '#F5E6C4',  // Dourado claro estilo champanhe
-                            goldHover: '#DCC398' // Dourado um pouco mais escuro para hover
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'], // Fonte limpa e moderna
-                    }
-                }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Diagnóstico Estratégico de Posicionamento Digital</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: {
+              900: "#0b0b0f",
+              800: "#101018",
+              700: "#141423",
+              600: "#1b1b2d"
+            },
+            gold: {
+              500: "#E7D3A7",
+              600: "#D8C08E",
+              700: "#C7AE79"
+            },
+            ink: {
+              50: "#F5F7FB",
+              200: "#C9CEDA",
+              300: "#A9B0C0",
+              400: "#7D8597",
+              600: "#50586A",
+              800: "#2A2F3B"
             }
+          },
+          boxShadow: {
+            soft: "0 10px 30px rgba(0,0,0,.35)",
+            glow: "0 0 0 1px rgba(231,211,167,.18), 0 30px 80px rgba(0,0,0,.55)"
+          }
         }
-    </script>
-    <style type="text/tailwindcss">
-        /* Classes utilitárias para transições suaves */
-        .fade-enter {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        .fade-enter-active {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 300ms ease-out, transform 300ms ease-out;
-        }
-        .btn-option {
-            @apply w-full text-left p-4 rounded-lg border border-gray-700 bg-brand-dark text-brand-light hover:border-brand-gold hover:bg-[#252525] transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-opacity-50 active:scale-[0.99];
-        }
-    </style>
+      }
+    };
+  </script>
 </head>
-<body class="h-full flex items-center justify-center p-4 font-sans antialiased">
 
-    <main id="quiz-container" class="w-full max-w-md p-8 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-gray-800 fade-enter-active">
-        
-        <div class="mb-6">
-            <div class="flex justify-between text-sm text-brand-gold mb-2 font-medium">
-                <span>Diagnóstico Executivo</span>
-                <span id="progress-text">Questão 1 de 4</span>
+<body class="h-full text-ink-50 antialiased">
+  <div class="min-h-full">
+    <header class="px-6 pt-10 pb-6">
+      <div class="mx-auto max-w-5xl">
+        <div class="flex flex-col gap-3">
+          <div class="inline-flex items-center gap-2 text-xs text-ink-300">
+            <span class="h-1.5 w-1.5 rounded-full bg-gold-600"></span>
+            Aplicação por seleção • Não é curso • Não é social media operacional
+          </div>
+
+          <h1 class="text-2xl md:text-4xl font-semibold tracking-tight">
+            Diagnóstico Estratégico de Posicionamento Digital
+          </h1>
+
+          <p class="text-ink-200 max-w-3xl leading-relaxed">
+            Aplicação exclusiva para profissionais liberais e autônomos que já têm autoridade no offline,
+            mas sentem que o Instagram não sustenta o nível do serviço e do preço.
+          </p>
+
+          <div class="mt-4 rounded-2xl bg-bg-800 shadow-glow border border-white/5 p-5">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+              <div class="text-sm text-ink-200">
+                Tempo estimado: <span class="text-ink-50 font-medium">2–3 minutos</span> •
+                Respostas objetivas aumentam chance de seleção.
+              </div>
+              <div class="text-xs text-ink-300">
+                Critério: foco em posicionamento, percepção de valor e cliente ideal.
+              </div>
             </div>
-            <div class="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
-                <div id="progress-bar" class="h-full bg-brand-gold transition-all duration-500 ease-out" style="width: 25%"></div>
+
+            <div class="mt-5">
+              <div class="flex items-center justify-between text-xs text-ink-300">
+                <span id="progressLabel">Etapa 1 de 4</span>
+                <span id="progressPct">0%</span>
+              </div>
+              <div class="mt-2 h-2 w-full rounded-full bg-white/5 overflow-hidden">
+                <div id="progressBar" class="h-full w-0 rounded-full bg-gold-600 transition-all duration-500"></div>
+              </div>
             </div>
+          </div>
+
+          <div id="alertBox" class="hidden mt-4 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-100">
+            <strong class="font-semibold">Atenção:</strong>
+            <span id="alertText">revise os campos destacados.</span>
+          </div>
         </div>
+      </div>
+    </header>
 
-        <div id="question-area" class="transition-opacity duration-300 ease-in-out">
-            <h2 id="question-text" class="text-xl font-semibold text-white mb-6 leading-tight">
-                </h2>
-            <div id="options-container" class="space-y-3">
+    <main class="px-6 pb-16">
+      <div class="mx-auto max-w-5xl">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6">
+          <!-- FORM CARD -->
+          <section class="rounded-2xl bg-bg-800 shadow-soft border border-white/5 p-6 md:p-8">
+            <form id="appForm" class="space-y-6" novalidate>
+              <!-- STEP 1 -->
+              <div class="step" data-step="1">
+                <div class="flex items-center justify-between">
+                  <h2 class="text-lg md:text-xl font-semibold">Qualificação profissional</h2>
+                  <span class="text-xs text-ink-300">Obrigatório</span>
                 </div>
-        </div>
 
-        <div id="result-area" class="hidden fade-enter text-center">
-            <div class="mb-6">
-                <svg class="w-16 h-16 text-brand-gold mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
-                
-                <h2 class="text-2xl font-bold text-white mb-2">Diagnóstico Concluído</h2>
-                <h3 id="result-title" class="text-xl font-semibold text-brand-gold mb-4">
-                    </h3>
-                <p id="result-description" class="text-brand-light text-base leading-relaxed mb-8">
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="text-sm text-ink-200">Nome e sobrenome</label>
+                    <input name="nome" required
+                      class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 placeholder:text-ink-400 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10"
+                      placeholder="Ex: Ana Souza" />
+                    <p class="mt-1 text-xs text-ink-400">Sem abreviações.</p>
+                  </div>
+
+                  <div>
+                    <label class="text-sm text-ink-200">Área de atuação</label>
+                    <input name="area" required
+                      class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 placeholder:text-ink-400 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10"
+                      placeholder="Ex: Medicina, Advocacia, Consultoria..." />
+                  </div>
+
+                  <div>
+                    <label class="text-sm text-ink-200">Tempo de mercado</label>
+                    <select name="tempo" required
+                      class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10">
+                      <option value="" disabled selected>Selecione</option>
+                      <option>Menos de 5 anos</option>
+                      <option>5 a 10 anos</option>
+                      <option>Mais de 10 anos</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="text-sm text-ink-200">Perfil no Instagram (ou site)</label>
+                    <input name="perfil" required
+                      class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 placeholder:text-ink-400 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10"
+                      placeholder="https://instagram.com/seuperfil" />
+                    <p class="mt-1 text-xs text-ink-400">Coloque o link direto.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STEP 2 -->
+              <div class="step hidden" data-step="2">
+                <div class="flex items-center justify-between">
+                  <h2 class="text-lg md:text-xl font-semibold">Diagnóstico do problema</h2>
+                  <span class="text-xs text-ink-300">Obrigatório</span>
+                </div>
+
+                <div class="mt-4 space-y-5">
+                  <div class="rounded-2xl bg-bg-700/60 border border-white/5 p-5">
+                    <p class="text-sm text-ink-200">
+                      Hoje, o seu Instagram ajuda ou atrapalha a percepção de valor do seu serviço?
                     </p>
+                    <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <label class="choice">
+                        <input type="radio" name="impacto" value="Ajuda" required />
+                        <span>Ajuda</span>
+                      </label>
+                      <label class="choice">
+                        <input type="radio" name="impacto" value="Não ajuda" required />
+                        <span>Não ajuda</span>
+                      </label>
+                      <label class="choice">
+                        <input type="radio" name="impacto" value="Atrapalha" required />
+                        <span>Atrapalha</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="rounded-2xl bg-bg-700/60 border border-white/5 p-5">
+                    <p class="text-sm text-ink-200">
+                      Qual dessas situações mais descreve seu momento atual no digital?
+                    </p>
+                    <div class="mt-4 space-y-3">
+                      <label class="choice block">
+                        <input type="radio" name="dor" value="Meu posicionamento não acompanha o nível do meu serviço" required />
+                        <span>Meu posicionamento não acompanha o nível do meu serviço</span>
+                      </label>
+                      <label class="choice block">
+                        <input type="radio" name="dor" value="Meu perfil parece genérico perto de concorrentes menos experientes" required />
+                        <span>Meu perfil parece genérico perto de concorrentes menos experientes</span>
+                      </label>
+                      <label class="choice block">
+                        <input type="radio" name="dor" value="Atraio pessoas fora do meu perfil de cliente ideal" required />
+                        <span>Atraio pessoas fora do meu perfil de cliente ideal</span>
+                      </label>
+                      <label class="choice block">
+                        <input type="radio" name="dor" value="Tenho autoridade real, mas isso não é percebido no Instagram" required />
+                        <span>Tenho autoridade real, mas isso não é percebido no Instagram</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STEP 3 -->
+              <div class="step hidden" data-step="3">
+                <div class="flex items-center justify-between">
+                  <h2 class="text-lg md:text-xl font-semibold">Qualificação financeira</h2>
+                  <span class="text-xs text-ink-300">Obrigatório</span>
+                </div>
+
+                <div class="mt-4 space-y-5">
+                  <div class="rounded-2xl bg-bg-700/60 border border-white/5 p-5">
+                    <p class="text-sm text-ink-200">
+                      Este diagnóstico e eventual acompanhamento estratégico são indicados para profissionais que tratam posicionamento como investimento, não como custo.
+                    </p>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="text-sm text-ink-200">Ticket médio do seu serviço</label>
+                      <select name="ticket" required
+                        class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10">
+                        <option value="" disabled selected>Selecione</option>
+                        <option>Até R$ 3.000</option>
+                        <option>R$ 3.000 a R$ 7.000</option>
+                        <option>Acima de R$ 7.000</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label class="text-sm text-ink-200">Investimento mensal em posicionamento</label>
+                      <select name="investimento" required
+                        class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10">
+                        <option value="" disabled selected>Selecione</option>
+                        <option>Entre R$ 3.000 e R$ 5.000</option>
+                        <option>Entre R$ 5.000 e R$ 10.000</option>
+                        <option>Acima de R$ 10.000</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="rounded-2xl bg-bg-700/60 border border-white/5 p-5">
+                    <label class="text-sm text-ink-200">
+                      Se o seu posicionamento digital continuar exatamente como está, o que tende a acontecer?
+                    </label>
+                    <textarea name="consequencia" required rows="4"
+                      class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 placeholder:text-ink-400 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10"
+                      placeholder="Seja objetivo. Ex: vou continuar atraindo cliente errado, tendo que justificar preço, etc."></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STEP 4 -->
+              <div class="step hidden" data-step="4">
+                <div class="flex items-center justify-between">
+                  <h2 class="text-lg md:text-xl font-semibold">Contato e seleção</h2>
+                  <span class="text-xs text-ink-300">Obrigatório</span>
+                </div>
+
+                <div class="mt-4 space-y-4">
+                  <div>
+                    <label class="text-sm text-ink-200">WhatsApp para agendamento</label>
+                    <input name="whatsapp" required inputmode="tel"
+                      class="mt-2 w-full rounded-xl bg-bg-700 border border-white/10 px-4 py-3 text-ink-50 placeholder:text-ink-400 outline-none focus:border-gold-600/70 focus:ring-2 focus:ring-gold-600/10"
+                      placeholder="(DDD) 9xxxx-xxxx" />
+                    <p class="mt-1 text-xs text-ink-400">Você só será contatado se for selecionado.</p>
+                  </div>
+
+                  <div class="rounded-2xl bg-bg-700/60 border border-white/5 p-5">
+                    <p class="text-sm text-ink-200">
+                      Ao enviar, você confirma que entende que esta é uma aplicação por seleção e que nem todo perfil avançará para reunião.
+                    </p>
+                    <label class="mt-4 inline-flex items-start gap-3">
+                      <input type="checkbox" name="consent" required class="mt-1 h-4 w-4 accent-[#D8C08E]" />
+                      <span class="text-sm text-ink-200">Entendi e concordo.</span>
+                    </label>
+                  </div>
+
+                  <div id="finalBox" class="hidden rounded-2xl border border-gold-600/25 bg-gold-600/10 p-5">
+                    <p class="text-sm text-ink-50">
+                      Aplicação enviada. Se seu perfil for selecionado, você receberá mensagem no WhatsApp.
+                    </p>
+                    <p class="mt-2 text-xs text-ink-200">
+                      Dica: copie seus dados abaixo (para referência).
+                    </p>
+                    <pre id="jsonOut" class="mt-3 text-xs whitespace-pre-wrap break-words text-ink-50/90 bg-black/20 rounded-xl p-4 border border-white/5"></pre>
+                  </div>
+                </div>
+              </div>
+
+              <!-- NAV -->
+              <div class="pt-2 flex items-center justify-between gap-3">
+                <button type="button" id="backBtn"
+                  class="hidden rounded-xl border border-white/10 px-4 py-3 text-sm text-ink-200 hover:bg-white/5 transition">
+                  Voltar
+                </button>
+
+                <div class="ml-auto flex items-center gap-3">
+                  <button type="button" id="saveBtn"
+                    class="rounded-xl border border-white/10 px-4 py-3 text-sm text-ink-200 hover:bg-white/5 transition">
+                    Salvar rascunho
+                  </button>
+
+                  <button type="button" id="nextBtn"
+                    class="rounded-xl bg-gold-600 px-5 py-3 text-sm font-medium text-bg-900 hover:bg-gold-500 transition shadow-soft">
+                    Próximo
+                  </button>
+
+                  <button type="submit" id="submitBtn"
+                    class="hidden rounded-xl bg-gold-600 px-5 py-3 text-sm font-medium text-bg-900 hover:bg-gold-500 transition shadow-soft">
+                    Enviar aplicação
+                  </button>
+                </div>
+              </div>
+            </form>
+          </section>
+
+          <!-- SIDE PANEL -->
+          <aside class="rounded-2xl bg-bg-800 shadow-soft border border-white/5 p-6 h-fit">
+            <h3 class="font-semibold">Como eu uso isso</h3>
+            <p class="mt-2 text-sm text-ink-200 leading-relaxed">
+              Esse formulário existe para filtrar e dar contexto.
+              Ele não substitui conversa. Ele economiza seu tempo e aumenta sua autoridade.
+            </p>
+
+            <div class="mt-5 rounded-xl bg-bg-700/60 border border-white/5 p-4">
+              <p class="text-xs text-ink-300">Seleção tende a priorizar:</p>
+              <ul class="mt-2 text-sm text-ink-200 space-y-2">
+                <li>• 5+ anos de mercado</li>
+                <li>• Dor clara (perfil genérico / cliente errado / percepção baixa)</li>
+                <li>• Investimento mensal compatível</li>
+                <li>• Resposta objetiva sobre consequência</li>
+              </ul>
             </div>
-            
-            <a href="#SEU-LINK-DO-WHATSAPP-AQUI" class="block w-full py-4 px-6 bg-brand-gold hover:bg-brand-goldHover text-brand-dark font-bold rounded-lg transition-colors duration-200 shadow-[0_0_15px_rgba(245,230,196,0.2)]">
-                Solicitar Plano de Ação Executivo
-            </a>
+
+            <div class="mt-5 text-xs text-ink-400">
+              Observação: se você quiser receber isso em uma planilha automaticamente,
+              conecte um endpoint no código (instrução no final).
+            </div>
+          </aside>
         </div>
-
+      </div>
     </main>
+  </div>
 
-    <script>
-        // --- Lógica do Quiz ---
+  <style>
+    .choice {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(20,20,35,.55);
+      cursor: pointer;
+      transition: all .15s ease;
+      user-select: none;
+    }
+    .choice:hover { background: rgba(255,255,255,.06); }
+    .choice input { accent-color: #D8C08E; }
+    .invalid {
+      border-color: rgba(239,68,68,.55) !important;
+      box-shadow: 0 0 0 2px rgba(239,68,68,.12);
+    }
+  </style>
 
-        // 1. Definição das Perguntas e Pontuações (Ajuste conforme sua metodologia)
-        const questions = [
-            {
-                question: "Com que frequência você publica conteúdo estratégico no seu perfil?",
-                options: [
-                    { text: "Raramente, quando sobra tempo.", score: 1 },
-                    { text: "Tento manter 2-3 vezes na semana, mas oscila.", score: 2 },
-                    { text: "Consistente e planejado, quase todo dia.", score: 3 }
-                ]
-            },
-            {
-                question: "Como você avalia a qualidade visual das suas fotos e vídeos atuais?",
-                options: [
-                    { text: "Amadoras/Caseiras (selfies rápidas).", score: 1 },
-                    { text: "Boas, mas sem uma identidade clara.", score: 2 },
-                    { text: "Profissionais, alinhadas à minha imagem executiva.", score: 3 }
-                ]
-            },
-            {
-                question: "Se um CEO ideal visitasse seu perfil hoje, ele entenderia em 5 segundos o que você vende?",
-                options: [
-                    { text: "Provavelmente não, está confuso.", score: 1 },
-                    { text: "Entenderia a área, mas talvez não o serviço premium.", score: 2 },
-                    { text: "Sim, minha bio e destaques são cristalinos.", score: 3 }
-                ]
-            },
-            {
-                question: "Qual o tipo de interação mais comum que você recebe?",
-                options: [
-                    { text: "Apenas curtidas de amigos e família.", score: 1 },
-                    { text: "Comentários genéricos e algumas perguntas.", score: 2 },
-                    { text: "Directs de decisores interessados no meu trabalho.", score: 3 }
-                ]
-            }
-        ];
+  <script>
+    const form = document.getElementById("appForm");
+    const steps = Array.from(document.querySelectorAll(".step"));
+    const nextBtn = document.getElementById("nextBtn");
+    const backBtn = document.getElementById("backBtn");
+    const saveBtn = document.getElementById("saveBtn");
+    const submitBtn = document.getElementById("submitBtn");
+    const progressBar = document.getElementById("progressBar");
+    const progressLabel = document.getElementById("progressLabel");
+    const progressPct = document.getElementById("progressPct");
+    const alertBox = document.getElementById("alertBox");
+    const alertText = document.getElementById("alertText");
+    const finalBox = document.getElementById("finalBox");
+    const jsonOut = document.getElementById("jsonOut");
 
-        let currentQuestionIndex = 0;
-        let totalScore = 0;
+    const STORAGE_KEY = "ian_diag_draft_v1";
+    let currentStep = 1;
+    const totalSteps = steps.length;
 
-        // Referências aos elementos do DOM
-        const questionArea = document.getElementById('question-area');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const progressText = document.getElementById('progress-text');
-        const progressBar = document.getElementById('progress-bar');
-        const resultArea = document.getElementById('result-area');
-        const resultTitle = document.getElementById('result-title');
-        const resultDescription = document.getElementById('result-description');
+    function showStep(n) {
+      currentStep = n;
+      steps.forEach(s => s.classList.toggle("hidden", Number(s.dataset.step) !== n));
 
-        // Função para carregar a próxima pergunta
-        function loadQuestion() {
-            // Efeito de fade out
-            questionArea.classList.add('opacity-0');
+      backBtn.classList.toggle("hidden", n === 1);
+      nextBtn.classList.toggle("hidden", n === totalSteps);
+      submitBtn.classList.toggle("hidden", n !== totalSteps);
 
-            setTimeout(() => {
-                const currentQuestion = questions[currentQuestionIndex];
-                
-                // Atualiza textos
-                questionText.textContent = currentQuestion.question;
-                progressText.textContent = `Questão ${currentQuestionIndex + 1} de ${questions.length}`;
-                
-                // Atualiza barra de progresso
-                const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
-                progressBar.style.width = `${progressPercentage}%`;
+      const pct = Math.round(((n - 1) / (totalSteps - 1)) * 100);
+      progressBar.style.width = pct + "%";
+      progressLabel.textContent = `Etapa ${n} de ${totalSteps}`;
+      progressPct.textContent = pct + "%";
 
-                // Limpa opções antigas
-                optionsContainer.innerHTML = '';
+      alertBox.classList.add("hidden");
+      clearInvalidMarks();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 
-                // Cria os novos botões
-                currentQuestion.options.forEach(option => {
-                    const button = document.createElement('button');
-                    button.className = 'btn-option';
-                    button.textContent = option.text;
-                    button.onclick = () => selectOption(option.score);
-                    optionsContainer.appendChild(button);
-                });
+    function clearInvalidMarks() {
+      form.querySelectorAll(".invalid").forEach(el => el.classList.remove("invalid"));
+    }
 
-                // Efeito de fade in
-                questionArea.classList.remove('opacity-0');
-            }, 300); // Espera o tempo da transição CSS
+    function markInvalid(el) {
+      if (!el) return;
+      el.classList.add("invalid");
+    }
+
+    function validateStep(n) {
+      clearInvalidMarks();
+      alertBox.classList.add("hidden");
+
+      const stepEl = steps.find(s => Number(s.dataset.step) === n);
+      const requiredFields = Array.from(stepEl.querySelectorAll("[required]"));
+      let ok = true;
+
+      // For radios/checkboxes, browser validation is inconsistent on step-by-step.
+      const groups = {};
+      requiredFields.forEach(f => {
+        if (f.type === "radio") groups[f.name] = groups[f.name] || { type: "radio", els: [] }, groups[f.name].els.push(f);
+        else if (f.type === "checkbox") groups[f.name] = groups[f.name] || { type: "checkbox", els: [] }, groups[f.name].els.push(f);
+      });
+
+      // Validate non-radio/checkbox
+      requiredFields.forEach(f => {
+        if (f.type === "radio" || f.type === "checkbox") return;
+        if (!f.value || !f.value.trim()) { ok = false; markInvalid(f); }
+      });
+
+      // Validate groups
+      Object.values(groups).forEach(g => {
+        if (g.type === "radio") {
+          const checked = g.els.some(r => r.checked);
+          if (!checked) { ok = false; g.els.forEach(r => markInvalid(r.closest("label") || r)); }
         }
-
-        // Função ao selecionar uma opção
-        function selectOption(score) {
-            totalScore += score;
-            currentQuestionIndex++;
-
-            if (currentQuestionIndex < questions.length) {
-                loadQuestion();
-            } else {
-                showResult();
-            }
+        if (g.type === "checkbox") {
+          const checked = g.els.every(c => c.checked);
+          if (!checked) { ok = false; g.els.forEach(c => markInvalid(c)); }
         }
+      });
 
-        // Função para mostrar o resultado final
-        function showResult() {
-            questionArea.classList.add('hidden');
-            document.querySelector('.mb-6').classList.add('hidden'); // Esconde a barra de progresso
-            
-            let title = "";
-            let description = "";
+      if (!ok) {
+        alertText.textContent = "revise os campos obrigatórios antes de continuar.";
+        alertBox.classList.remove("hidden");
+      }
+      return ok;
+    }
 
-            // Lógica de Pontuação (Máximo 12 pontos)
-            if (totalScore <= 6) {
-                title = "Nível: Presença Inicial";
-                description = "Você está no digital, mas sua imagem ainda não reflete sua real competência offline. Seu perfil precisa de uma reestruturação de base antes de atrair grandes clientes.";
-            } else if (totalScore <= 10) {
-                title = "Nível: Autoridade em Ascensão";
-                description = "Você já se destaca da maioria, mas ainda perde oportunidades por inconsistências visuais ou estratégicas. Faltam detalhes para se tornar a opção óbvia para clientes de alto ticket.";
-            } else {
-                title = "Nível: Autoridade Executiva";
-                description = "Sua presença digital é forte. O próximo passo não é mais 'aparecer', mas sim refinar sua narrativa para fechar contratos maiores com menos esforço.";
-            }
-            
-            // Adiciona a chamada final para o seu serviço em todos os resultados
-            description += "\n\nEste diagnóstico aponta que o **Pack Posicionamento Executivo** é a ferramenta exata para levar sua imagem ao nível que seu negócio exige.";
+    function formToJSON() {
+      const fd = new FormData(form);
+      const obj = {};
+      for (const [k, v] of fd.entries()) {
+        // checkbox consent returns "on" when checked
+        obj[k] = v;
+      }
+      // radios unchecked not present; ok.
+      return obj;
+    }
 
-            resultTitle.textContent = title;
-            resultDescription.textContent = description;
-            
-            // Mostra a área de resultado com fade in
-            resultArea.classList.remove('hidden');
-            setTimeout(() => {
-                resultArea.classList.add('fade-enter-active');
-            }, 50);
+    function saveDraft() {
+      const data = formToJSON();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function loadDraft() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      try {
+        const data = JSON.parse(raw);
+        Object.entries(data).forEach(([k, v]) => {
+          const els = form.querySelectorAll(`[name="${CSS.escape(k)}"]`);
+          els.forEach(el => {
+            if (el.type === "radio") el.checked = (el.value === v);
+            else if (el.type === "checkbox") el.checked = (v === "on" || v === true);
+            else el.value = v;
+          });
+        });
+      } catch {}
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (!validateStep(currentStep)) return;
+      saveDraft();
+      showStep(Math.min(totalSteps, currentStep + 1));
+    });
+
+    backBtn.addEventListener("click", () => {
+      showStep(Math.max(1, currentStep - 1));
+    });
+
+    saveBtn.addEventListener("click", () => {
+      saveDraft();
+      alertText.textContent = "rascunho salvo neste dispositivo.";
+      alertBox.classList.remove("hidden");
+      setTimeout(() => alertBox.classList.add("hidden"), 1600);
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!validateStep(currentStep)) return;
+
+      const data = formToJSON();
+      saveDraft();
+
+      // OPTIONAL: send to an endpoint
+      // 1) Create a webhook (Make/Zapier) or Google Apps Script endpoint
+      // 2) Replace ENDPOINT_URL with your endpoint
+      const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbyPf5t0QFiH75-86pkZx-lT8DIpHXj4pxSZUg-ZaCHcWowu7IgwsZ4zALZtkm0g90ucpQ/exec"; // e.g. "https://YOUR-ENDPOINT"
+      if (ENDPOINT_URL) {
+        try {
+          await fetch(ENDPOINT_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...data, submitted_at: new Date().toISOString() })
+          });
+        } catch (err) {
+          // If endpoint fails, still show JSON so you don't lose the lead.
+          console.warn("Failed to send", err);
         }
+      }
 
-        // Inicia o quiz
-        loadQuestion();
+      finalBox.classList.remove("hidden");
+      jsonOut.textContent = JSON.stringify({ ...data, submitted_at: new Date().toISOString() }, null, 2);
 
-    </script>
+      // lock form optionally
+      // Array.from(form.elements).forEach(el => el.disabled = true);
+      // submitBtn.disabled = true;
+    });
+
+    loadDraft();
+    showStep(1);
+  </script>
 </body>
 </html>
