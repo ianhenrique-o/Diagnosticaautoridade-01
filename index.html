@@ -262,33 +262,34 @@
       transitionIn(form);
     }
 
-    async function finish(){
-      await transitionOut(form);
-      hide(form);
-      show(final);
-      transitionIn(final);
+   async function finish(){
+  await transitionOut(form);
+  hide(form);
+  show(final);
+  transitionIn(final);
 
-      try{
-        const payload = { submittedAt: new Date().toISOString(), answers };
-        const res = await fetch(ENDPOINT_URL, {
-          method:"POST",
-          headers:{ "Content-Type":"application/json" },
-          body: JSON.stringify(payload)
-        });
+  // Nunca exibir erro para o usuário
+  status.textContent = ""; // ou apaga o <p id="status"> do HTML
 
-        status.textContent = res.ok
-          ? "Recebido."
-          : "Não consegui registrar automaticamente. Tente novamente.";
-      }catch(e){
-        status.textContent = "Falha de conexão ao registrar.";
-      }
-    }
+  // Envio ultra-compatível (Apps Script + GitHub Pages)
+  try{
+    const payload = {
+      submittedAt: new Date().toISOString(),
+      ...answers
+    };
 
-    document.getElementById("start").onclick = start;
-    document.getElementById("next").onclick = next;
-    aEl.addEventListener("keydown", (e)=>{
-      if(e.key==="Enter"){ e.preventDefault(); next(); }
+    const body = new URLSearchParams(payload).toString();
+
+    await fetch(ENDPOINT_URL, {
+      method: "POST",
+      mode: "no-cors", // evita bloqueio CORS/redirect
+      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+      body
     });
-  </script>
-</body>
-</html>
+
+    // Mesmo sem conseguir ler resposta (no-cors), a gente assume "Recebido"
+    // porque o usuário não precisa saber do backend.
+  } catch (e) {
+    // Silêncio total
+  }
+}
