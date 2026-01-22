@@ -17,7 +17,6 @@
       --muted:rgba(242,242,242,.70);
       --line:rgba(255,255,255,.14);
       --gold:#E6D3A3;             /* dourado claro */
-      --goldSoft:rgba(230,211,163,.10);
     }
 
     *{ box-sizing:border-box; }
@@ -56,7 +55,6 @@
       animation: starDrift 48s linear infinite;
       background-repeat: repeat;
       background-size: 520px 520px;
-      /* camada única (pequenos pontos) em SVG data-uri */
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Crect width='520' height='520' fill='black'/%3E%3Cg fill='white'%3E%3Ccircle cx='32' cy='44' r='0.9' opacity='0.55'/%3E%3Ccircle cx='120' cy='90' r='0.7' opacity='0.40'/%3E%3Ccircle cx='210' cy='30' r='0.8' opacity='0.35'/%3E%3Ccircle cx='300' cy='120' r='1.0' opacity='0.45'/%3E%3Ccircle cx='410' cy='60' r='0.7' opacity='0.35'/%3E%3Ccircle cx='480' cy='140' r='0.9' opacity='0.50'/%3E%3Ccircle cx='70' cy='210' r='0.8' opacity='0.40'/%3E%3Ccircle cx='160' cy='250' r='1.1' opacity='0.45'/%3E%3Ccircle cx='260' cy='220' r='0.7' opacity='0.30'/%3E%3Ccircle cx='340' cy='260' r='0.9' opacity='0.40'/%3E%3Ccircle cx='460' cy='240' r='0.8' opacity='0.35'/%3E%3Ccircle cx='500' cy='300' r='1.2' opacity='0.45'/%3E%3Ccircle cx='40' cy='360' r='0.8' opacity='0.30'/%3E%3Ccircle cx='110' cy='430' r='1.0' opacity='0.45'/%3E%3Ccircle cx='220' cy='410' r='0.7' opacity='0.30'/%3E%3Ccircle cx='310' cy='380' r='0.9' opacity='0.40'/%3E%3Ccircle cx='390' cy='460' r='0.8' opacity='0.35'/%3E%3Ccircle cx='470' cy='420' r='1.1' opacity='0.40'/%3E%3C/g%3E%3C/svg%3E");
       filter: blur(0.2px);
     }
@@ -180,7 +178,6 @@
       100%{ transform: translateX(0); }
     }
 
-    /* Mobile */
     @media (max-width: 520px){
       .p{ font-size: 16px; }
       .btn{ width: 100%; }
@@ -216,16 +213,15 @@
     <section id="final" class="slide" style="display:none;">
       <h1 class="q">Obrigado.</h1>
       <p class="p">Se você for selecionado, eu entrarei em contato via WhatsApp com os próximos passos.</p>
-      <!-- Sem status de erro. Silêncio. -->
     </section>
   </main>
 
   <script>
-    // Endpoint /exec (planilha)
+    // ✅ Endpoint /exec (Apps Script)
     const ENDPOINT_URL =
       "https://script.google.com/macros/s/AKfycbw3rM8FHDlwdu-7WJCNJPYNnk9UcYZgWk686qKYtr4XFuSe3BnHgotAdoaeUxbw5FLD1Q/exec";
 
-    // Perguntas (inclui as duas novas)
+    // ✅ Perguntas (inclui momento + investimento)
     const QUESTIONS = [
       { id:"nome", label:"Nome e sobrenome", type:"text", required:true, kind:"input" },
       { id:"area", label:"Área de atuação", type:"text", required:true, kind:"input" },
@@ -379,14 +375,13 @@
       show(final);
       transitionIn(final);
 
-      // NÃO exibir erro pro usuário (premium = silêncio)
-
-      // Envio compatível com Apps Script + GitHub Pages (sem CORS)
+      // ✅ Envio compatível (Apps Script + GitHub Pages)
       try{
         const payload = {
           submittedAt: new Date().toISOString(),
           ...answers
         };
+
         const body = new URLSearchParams(payload).toString();
 
         await fetch(ENDPOINT_URL, {
@@ -396,7 +391,7 @@
           body
         });
       }catch(e){
-        // silêncio total
+        // silêncio total (premium)
       }
     }
 
