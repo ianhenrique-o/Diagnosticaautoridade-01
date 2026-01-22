@@ -3,137 +3,292 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Diagnóstico</title>
+  <title>Diagnóstico Estratégico</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
-    :root { color-scheme: dark; }
+    :root{
+      color-scheme: dark;
+      --bg:#0E0F11;
+      --text:#F2F2F2;
+      --muted:rgba(242,242,242,.72);
+      --line:rgba(255,255,255,.16);
+      --gold:#E6D3A3;
+      --gold2:#F1E2BF;
+    }
+
+    *{box-sizing:border-box}
     body{
       margin:0; min-height:100vh;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:#0E0F11; color:#F2F2F2;
+      font-family:Inter,system-ui,sans-serif;
+      background:var(--bg);
+      color:var(--text);
       display:flex; align-items:center; justify-content:center;
       padding:24px;
+      overflow:hidden;
     }
+
+    /* ===== Fundo criativo minimalista ===== */
+    .bg{
+      position:fixed; inset:-60px;
+      pointer-events:none; z-index:-3;
+      background:
+        radial-gradient(900px 520px at 20% 10%, rgba(230,211,163,.12), transparent 62%),
+        radial-gradient(900px 560px at 80% 100%, rgba(230,211,163,.09), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.03), transparent 50%, rgba(0,0,0,.35));
+      filter: saturate(105%);
+    }
+
+    /* Orb dourado que “deriva” lentamente (assinatura visual) */
+    .orb{
+      position:fixed;
+      width:520px; height:520px;
+      left:10%; top:15%;
+      border-radius:999px;
+      background: radial-gradient(circle at 30% 30%,
+        rgba(241,226,191,.22),
+        rgba(230,211,163,.12) 35%,
+        rgba(230,211,163,.05) 55%,
+        transparent 70%
+      );
+      filter: blur(6px);
+      opacity:.9;
+      pointer-events:none;
+      z-index:-2;
+      animation: drift 14s ease-in-out infinite;
+      transform: translate3d(0,0,0);
+    }
+    @keyframes drift{
+      0%   { transform: translate(-10px, 6px) scale(1); }
+      40%  { transform: translate(16px, -12px) scale(1.03); }
+      70%  { transform: translate(26px, 18px) scale(0.99); }
+      100% { transform: translate(-10px, 6px) scale(1); }
+    }
+
+    /* Shimmer diagonal ultra sutil */
+    .shimmer{
+      position:fixed; inset:-40%;
+      z-index:-1; pointer-events:none;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(230,211,163,.00) 44%,
+        rgba(230,211,163,.08) 50%,
+        rgba(230,211,163,.00) 56%,
+        transparent 100%
+      );
+      transform: rotate(-10deg);
+      animation: sweep 11.5s ease-in-out infinite;
+      opacity:.55;
+      filter: blur(1px);
+    }
+    @keyframes sweep{
+      0%{ transform: translateX(-10%) rotate(-10deg); opacity:.35; }
+      50%{ transform: translateX(10%) rotate(-10deg); opacity:.55; }
+      100%{ transform: translateX(-10%) rotate(-10deg); opacity:.35; }
+    }
+
+    /* Grain bem leve */
+    .grain{
+      position:fixed; inset:-80px;
+      z-index:-1; pointer-events:none;
+      opacity:.07;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+
+    /* ===== Layout minimal ===== */
     .wrap{ width:100%; max-width:860px; }
     .q{
-      font-size: clamp(28px, 4vw, 56px);
-      line-height: 1.05;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin: 0 0 28px;
-      opacity:1;
-      transition: opacity 220ms ease, transform 220ms ease;
+      font-size:clamp(28px,4vw,56px);
+      line-height:1.05;
+      font-weight:500;
+      margin:0 0 22px;
+      letter-spacing:-0.02em;
+    }
+    .p{
+      font-size:18px;
+      line-height:1.6;
+      color:var(--muted);
+      max-width:720px;
+      margin:0 0 34px;
     }
     .field{
       width:100%;
-      font-size: clamp(18px, 2vw, 26px);
-      padding: 14px 0;
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid rgba(255,255,255,.18);
-      color:#F2F2F2;
+      font-size:clamp(18px,2vw,26px);
+      padding:14px 0;
+      background:transparent;
+      border:none;
+      border-bottom:1px solid var(--line);
+      color:var(--text);
       outline:none;
-      transition: border-color 180ms ease;
+      transition:border-color .2s;
     }
-    .field::placeholder{ color: rgba(242,242,242,.28); }
-    .field:focus{ border-bottom-color: #E6D3A3; }
+    .field:focus{ border-bottom-color:var(--gold); }
+    .field::placeholder{ color:rgba(242,242,242,.28); }
+
     .btn{
-      margin-top: 28px;
-      padding: 12px 22px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: #E6D3A3;
+      margin-top:28px;
+      padding:12px 22px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:var(--gold);
       color:#0E0F11;
       font-weight:600;
       cursor:pointer;
-      transition: opacity 160ms ease, transform 120ms ease;
+      transition:opacity .15s, transform .12s;
     }
     .btn:hover{ opacity:.92; }
-    .btn:active{ transform: scale(.98); }
-    .out{ opacity:0; transform: translateY(-6px); }
+    .btn:active{ transform:scale(.98); }
+
+    /* Slides / transição */
+    .slide{ transition:opacity .25s, transform .25s; }
+    .out{ opacity:0; transform:translateY(-6px); }
+    .in{ opacity:0; transform:translateY(10px); }
+
+    .shake{ animation: shake .25s; }
+    @keyframes shake{
+      0%{ transform: translateX(0); }
+      35%{ transform: translateX(-6px); }
+      70%{ transform: translateX(5px); }
+      100%{ transform: translateX(0); }
+    }
   </style>
 </head>
+
 <body>
+  <div class="bg"></div>
+  <div class="orb"></div>
+  <div class="shimmer"></div>
+  <div class="grain"></div>
+
   <main class="wrap" id="app">
-    <h1 class="q" id="q">Nome e sobrenome</h1>
-    <input class="field" id="a" placeholder="Digite aqui" autocomplete="off" />
-    <button class="btn" id="next">Próximo</button>
+    <section id="intro" class="slide">
+      <h1 class="q">Diagnóstico estratégico de posicionamento digital</h1>
+      <p class="p">
+        Algumas perguntas diretas para entender se sua presença digital sustenta o nível do seu trabalho.
+        <br>Leva menos de 3 minutos.
+      </p>
+      <button class="btn" id="start">Começar</button>
+    </section>
+
+    <section id="form" class="slide" style="display:none">
+      <h1 class="q" id="q"></h1>
+      <input class="field" id="a" placeholder="Digite aqui" autocomplete="off" />
+      <button class="btn" id="next">Próximo</button>
+    </section>
+
+    <section id="final" class="slide" style="display:none">
+      <h1 class="q">Obrigado.</h1>
+      <p class="p">Se você for selecionado, eu entrarei em contato via WhatsApp com os próximos passos.</p>
+      <p class="p" id="status" style="font-size:14px;opacity:.7"></p>
+    </section>
   </main>
 
   <script>
-    // COLE SUA URL DO WEB APP AQUI (Apps Script)
-    const ENDPOINT_URL = "COLE_A_URL_DO_WEB_APP_AQUI";
+    const ENDPOINT_URL =
+      "https://script.google.com/macros/s/AKfycbw3rM8FHDlwdu-7WJCNJPYNnk9UcYZgWk686qKYtr4XFuSe3BnHgotAdoaeUxbw5FLD1Q/exec";
 
     const QUESTIONS = [
-      { id: "nome", label: "Nome e sobrenome", type: "text", required: true },
-      { id: "area", label: "Área de atuação", type: "text", required: true },
-      { id: "tempo", label: "Tempo de mercado", type: "text", required: true },
-      { id: "perfil", label: "Link do Instagram (ou site)", type: "url", required: true },
-      { id: "problema", label: "Qual o principal gargalo do seu Instagram hoje?", type: "text", required: true },
-      { id: "ticket", label: "Ticket médio do seu serviço", type: "text", required: true },
-      { id: "whatsapp", label: "WhatsApp para contato", type: "tel", required: true },
+      { id:"nome", label:"Nome e sobrenome", type:"text", required:true },
+      { id:"area", label:"Área de atuação", type:"text", required:true },
+      { id:"tempo", label:"Tempo de mercado", type:"text", required:true },
+      { id:"perfil", label:"Link do Instagram ou site", type:"url", required:true },
+      { id:"problema", label:"Qual o principal gargalo do seu Instagram hoje?", type:"text", required:true },
+      { id:"ticket", label:"Ticket médio do seu serviço", type:"text", required:true },
+      { id:"whatsapp", label:"WhatsApp para contato", type:"tel", required:true },
     ];
 
-    const $q = document.getElementById("q");
-    const $a = document.getElementById("a");
-    const $next = document.getElementById("next");
-    const $app = document.getElementById("app");
+    const intro = document.getElementById("intro");
+    const form = document.getElementById("form");
+    const final = document.getElementById("final");
+    const qEl = document.getElementById("q");
+    const aEl = document.getElementById("a");
+    const status = document.getElementById("status");
 
     let i = 0;
     const answers = {};
 
-    function setQ() {
-      const cur = QUESTIONS[i];
-      $q.classList.add("out");
-      setTimeout(() => {
-        $q.textContent = cur.label;
-        $a.type = cur.type || "text";
-        $a.value = answers[cur.id] || "";
-        $a.placeholder = "Digite aqui";
-        $q.classList.remove("out");
-        setTimeout(() => $a.focus(), 60);
-      }, 220);
+    function hide(el){ el.style.display="none"; }
+    function show(el){ el.style.display="block"; }
+
+    function transitionOut(el){
+      el.classList.add("out");
+      return new Promise(r=>setTimeout(r,250));
+    }
+    function transitionIn(el){
+      el.classList.remove("out");
+      el.classList.add("in");
+      void el.offsetWidth;
+      el.classList.remove("in");
     }
 
-    async function submit() {
-      $app.innerHTML = `
-        <h1 class="q">Obrigado.</h1>
-        <div style="font-size:18px; line-height:1.5; color:rgba(242,242,242,.72); max-width:720px;">
-          Se você for selecionado, eu vou te chamar no WhatsApp com os próximos passos.
-        </div>
-      `;
-
-      if (!ENDPOINT_URL || ENDPOINT_URL.includes("COLE_A_URL")) return;
-
-      try {
-        await fetch(ENDPOINT_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ submittedAt: new Date().toISOString(), answers })
-        });
-      } catch {}
+    function setQuestion(){
+      const q = QUESTIONS[i];
+      qEl.textContent = q.label;
+      aEl.type = q.type;
+      aEl.value = answers[q.id] || "";
+      setTimeout(()=>aEl.focus(),60);
     }
 
-    function next() {
-      const cur = QUESTIONS[i];
-      const v = ($a.value || "").trim();
-      if (cur.required && !v) return;
+    async function start(){
+      await transitionOut(intro);
+      hide(intro);
+      show(form);
+      transitionIn(form);
+      setQuestion();
+    }
 
-      answers[cur.id] = v;
+    async function next(){
+      const q = QUESTIONS[i];
+      const v = (aEl.value || "").trim();
+      if(q.required && !v){
+        aEl.classList.add("shake");
+        setTimeout(()=>aEl.classList.remove("shake"),250);
+        return;
+      }
+      answers[q.id] = v;
       i++;
 
-      if (i >= QUESTIONS.length) return submit();
-      setQ();
+      if(i >= QUESTIONS.length){
+        await finish();
+        return;
+      }
+
+      await transitionOut(form);
+      setQuestion();
+      transitionIn(form);
     }
 
-    $next.addEventListener("click", next);
-    $a.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") { e.preventDefault(); next(); }
-    });
+    async function finish(){
+      await transitionOut(form);
+      hide(form);
+      show(final);
+      transitionIn(final);
 
-    setQ();
+      try{
+        const payload = { submittedAt: new Date().toISOString(), answers };
+        const res = await fetch(ENDPOINT_URL, {
+          method:"POST",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        status.textContent = res.ok
+          ? "Recebido."
+          : "Não consegui registrar automaticamente. Tente novamente.";
+      }catch(e){
+        status.textContent = "Falha de conexão ao registrar.";
+      }
+    }
+
+    document.getElementById("start").onclick = start;
+    document.getElementById("next").onclick = next;
+    aEl.addEventListener("keydown", (e)=>{
+      if(e.key==="Enter"){ e.preventDefault(); next(); }
+    });
   </script>
 </body>
 </html>
