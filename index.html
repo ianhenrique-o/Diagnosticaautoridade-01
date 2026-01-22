@@ -1,529 +1,101 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Diagnóstico Estratégico — Posicionamento Digital</title>
+<body class="min-h-screen bg-[#0E0F11] text-[#F2F2F2] flex items-center justify-center font-sans">
 
-  <!-- Fonte -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <main id="app" class="w-full max-w-2xl px-6">
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ["Inter", "system-ui", "sans-serif"] },
-          colors: {
-            ink: {
-              950: "#0B0D10",   // quase preto
-              900: "#0F1216",
-              800: "#14181E",
-              700: "#1B2028",
-            },
-            paper: {
-              50:  "#F6F7F9",   // branco opaco
-              100: "#EEF0F3",
-              200: "#D8DDE4",
-            },
-            gold: {
-              200: "#F5E8C8",   // dourado claro
-              300: "#E8D6AA",
-              400: "#DCC398",
-            }
-          },
-          boxShadow: {
-            glow: "0 0 0 1px rgba(245,232,200,0.14), 0 18px 60px rgba(0,0,0,0.55)",
-          }
-        }
-      }
-    }
-  </script>
+    <!-- Pergunta -->
+    <h1 id="question"
+        class="text-3xl md:text-5xl font-medium leading-tight tracking-tight mb-10 transition-opacity duration-300">
+      Nome e sobrenome
+    </h1>
 
-  <style>
-    :root { color-scheme: dark; }
-    .grain {
-      background-image:
-        radial-gradient(1200px 600px at 20% 0%, rgba(245,232,200,0.08), transparent 60%),
-        radial-gradient(1000px 700px at 90% 10%, rgba(255,255,255,0.06), transparent 55%),
-        radial-gradient(900px 500px at 50% 100%, rgba(245,232,200,0.06), transparent 60%);
-    }
-    .card-border {
-      background: linear-gradient(180deg, rgba(245,232,200,0.10), rgba(255,255,255,0.04));
-      padding: 1px;
-      border-radius: 20px;
-    }
-    .card {
-      border-radius: 19px;
-      background: rgba(15,18,22,0.78);
-      backdrop-filter: blur(10px);
-    }
-    .fade-slide-in {
-      animation: fadeSlideIn 420ms cubic-bezier(.2,.8,.2,1) both;
-    }
-    .fade-slide-out {
-      animation: fadeSlideOut 240ms cubic-bezier(.4,0,.2,1) both;
-    }
-    @keyframes fadeSlideIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeSlideOut {
-      from { opacity: 1; transform: translateY(0); }
-      to   { opacity: 0; transform: translateY(-6px); }
-    }
-    .soft-ring:focus {
-      outline: none;
-      box-shadow:
-        0 0 0 1px rgba(245,232,200,0.18),
-        0 0 0 4px rgba(245,232,200,0.10);
-    }
-  </style>
-</head>
-
-<body class="min-h-screen font-sans text-paper-50 bg-ink-950 grain">
-  <div class="min-h-screen px-5 py-8 md:py-14">
-    <div class="mx-auto w-full max-w-3xl">
-      <!-- Topo minimalista -->
-      <div class="flex items-start justify-between gap-6 mb-10">
-        <div class="space-y-3">
-          <div class="text-[12px] md:text-sm text-paper-200/70 tracking-wide">
-            Aplicação por seleção • 2–3 minutos • Respostas objetivas aumentam chance de seleção
-          </div>
-          <h1 class="text-3xl md:text-[44px] leading-[1.05] font-semibold tracking-tight">
-            Diagnóstico Estratégico de<br class="hidden md:block"> Posicionamento Digital
-          </h1>
-          <p class="text-paper-200/80 text-base md:text-lg leading-relaxed max-w-2xl">
-            Para profissionais experientes que já têm autoridade no offline, mas sentem que o Instagram não sustenta o nível do serviço e do preço.
-          </p>
-        </div>
-        <div class="hidden md:block text-right text-paper-200/70 text-sm leading-snug mt-1">
-          Critério:
-          <div class="text-paper-50/80">posicionamento • percepção de valor • cliente ideal</div>
-        </div>
-      </div>
-
-      <!-- Card principal -->
-      <div class="card-border shadow-glow">
-        <div class="card p-6 md:p-8">
-          <!-- progresso -->
-          <div class="flex items-center justify-between mb-5">
-            <div class="text-sm md:text-base text-paper-200/80">
-              <span class="text-gold-200 font-medium">Etapa</span>
-              <span id="progressText" class="ml-2">1 de 1</span>
-            </div>
-            <div id="etaText" class="text-sm md:text-base text-paper-200/60">
-              rápido (2–3 min)
-            </div>
-          </div>
-          <div class="h-[6px] w-full bg-white/5 rounded-full overflow-hidden mb-7">
-            <div id="progressBar" class="h-full bg-gold-200/90 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
-          </div>
-
-          <!-- Conteúdo -->
-          <div id="stage" class="fade-slide-in">
-            <div class="flex items-start justify-between gap-4 mb-4">
-              <div class="text-paper-200/60 text-sm md:text-base" id="sectionLabel">Pergunta</div>
-              <div class="text-paper-200/60 text-sm md:text-base" id="stepLabel">1/1</div>
-            </div>
-
-            <h2 id="questionTitle" class="text-xl md:text-3xl font-semibold tracking-tight leading-tight mb-4">
-              ...
-            </h2>
-
-            <p id="questionHint" class="text-paper-200/70 text-sm md:text-base leading-relaxed mb-6 hidden">
-              ...
-            </p>
-
-            <!-- Campo -->
-            <div id="fieldWrap" class="space-y-2 mb-8">
-              <!-- renderizado via JS -->
-            </div>
-
-            <!-- Ações -->
-            <div class="flex items-center justify-between gap-3">
-              <button id="backBtn"
-                class="px-4 md:px-5 py-3 rounded-xl border border-white/10 text-paper-200/80 hover:text-paper-50 hover:border-white/20 transition disabled:opacity-40 disabled:cursor-not-allowed"
-                disabled
-              >
-                Voltar
-              </button>
-
-              <div class="flex items-center gap-3">
-                <button id="saveDraftBtn"
-                  class="hidden md:inline-flex px-4 md:px-5 py-3 rounded-xl border border-white/10 text-paper-200/80 hover:text-paper-50 hover:border-white/20 transition"
-                  type="button"
-                  title="Salva no seu navegador (rascunho)"
-                >
-                  Salvar rascunho
-                </button>
-
-                <button id="nextBtn"
-                  class="px-5 md:px-6 py-3 rounded-xl bg-gold-200 text-ink-950 font-semibold hover:bg-gold-300 transition active:scale-[0.99]"
-                >
-                  Próximo
-                </button>
-              </div>
-            </div>
-
-            <div class="mt-5 text-paper-200/50 text-xs md:text-sm">
-              Ao enviar, você confirma que as informações serão usadas apenas para análise e retorno do diagnóstico.
-            </div>
-          </div>
-
-          <!-- Tela final -->
-          <div id="finalStage" class="hidden">
-            <div class="text-center py-8 md:py-10">
-              <div class="mx-auto mb-5 w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
-                <svg class="w-7 h-7 text-gold-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M20 7L9 18l-5-5" />
-                </svg>
-              </div>
-
-              <h3 class="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
-                Respostas enviadas.
-              </h3>
-              <p class="text-paper-200/75 text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-8">
-                Obrigado por responder com objetividade. Se você for selecionado, eu vou te chamar no <span class="text-paper-50/90 font-medium">WhatsApp</span> com os próximos passos.
-              </p>
-
-              <a id="whatsBtn" href="#" target="_blank" rel="noopener"
-                 class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-gold-200 text-ink-950 font-semibold hover:bg-gold-300 transition">
-                Falar no WhatsApp (opcional)
-              </a>
-
-              <div id="sendStatus" class="mt-5 text-sm text-paper-200/60"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Rodapé micro -->
-      <div class="mt-8 text-paper-200/45 text-xs md:text-sm">
-        Observação: você pode conectar um endpoint para salvar tudo em planilha automaticamente (configuração no código).
-      </div>
+    <!-- Resposta -->
+    <div id="field-container" class="mb-12 transition-opacity duration-300">
+      <input
+        id="answer"
+        type="text"
+        placeholder="Digite aqui"
+        class="w-full bg-transparent border-b border-white/20 focus:border-[#E6D3A3] outline-none
+               text-xl md:text-2xl py-3 placeholder:text-white/30 transition-colors"
+        autofocus
+      />
     </div>
-  </div>
+
+    <!-- Ação -->
+    <button
+      id="nextBtn"
+      class="text-[#0E0F11] bg-[#E6D3A3] px-8 py-3 rounded-full text-sm font-medium
+             hover:opacity-90 transition">
+      Próximo
+    </button>
+
+  </main>
 
   <script>
-    /**
-     * ============================
-     * 1) COLE A URL DO SEU WEB APP AQUI (Google Apps Script)
-     * ============================
-     * Ex: https://script.google.com/macros/s/AKfycbxxxx/exec
-     */
-    const ENDPOINT_URL = "COLE_A_URL_DO_WEB_APP_AQUI";
-
-    /**
-     * WhatsApp opcional (botão da tela final).
-     * Formato: https://wa.me/55DDDNUMERO?text=...
-     */
-    const WHATSAPP_LINK = "https://wa.me/55SEUNUMEROAQUI?text=Oi%20Ian%2C%20enviei%20meu%20diagn%C3%B3stico%20e%20quero%20entender%20os%20pr%C3%B3ximos%20passos.";
-
-    /**
-     * ============================
-     * 2) APENAS AS PERGUNTAS DO FORMULÁRIO (edite aqui)
-     * - Uma por vez
-     * - Objetivas
-     * - Sem firula
-     * ============================
-     */
-    const FORM = [
-      { id: "nome",        label: "Nome e sobrenome", type: "text",  placeholder: "Ex: Ana Souza", required: true },
-      { id: "area",        label: "Área de atuação",   type: "text",  placeholder: "Ex: Medicina, Advocacia, Consultoria", required: true },
-      { id: "tempo",       label: "Tempo de mercado",  type: "select", required: true, options: [
-        "Menos de 2 anos", "2–4 anos", "5–9 anos", "10+ anos"
-      ]},
-      { id: "perfil",      label: "Perfil no Instagram (ou site)", type: "url", placeholder: "Cole o link direto", required: true },
-
-      { id: "situacao", label: "Hoje, qual é o principal sinal de que seu Instagram não sustenta seu preço?", type: "select", required: true, options: [
-        "Atrai público errado (sensível a preço)",
-        "Quase não gera directs de decisão",
-        "Conteúdo não passa autoridade/seriedade",
-        "Visual amador / sem padrão",
-        "Não consigo explicar meu serviço premium rápido"
-      ]},
-
-      { id: "oferta", label: "O que você vende hoje?", type: "text", placeholder: "Ex: Consultoria, cirurgia, mentoria, serviço recorrente…", required: true },
-
-      { id: "ticket", label: "Qual faixa de ticket médio do seu serviço principal?", type: "select", required: true, options: [
-        "Até R$ 1.000", "R$ 1.000–3.000", "R$ 3.000–10.000", "R$ 10.000+"
-      ]},
-
-      { id: "meta", label: "Qual meta mais importante para os próximos 90 dias?", type: "select", required: true, options: [
-        "Aumentar percepção de valor (sem aumentar volume)",
-        "Atrair clientes mais qualificados (menos pechincha)",
-        "Vender um serviço premium com mais constância",
-        "Organizar posicionamento e narrativa",
-        "Criar um funil simples (conteúdo → direct → fechamento)"
-      ]},
-
-      { id: "autoridade_off", label: "Você já tem autoridade no offline?", type: "select", required: true, options: [
-        "Sim, forte (indicados/convites/resultados)", "Sim, moderada", "Ainda estou construindo"
-      ]},
-
-      { id: "conteudo", label: "Qual sua frequência real de conteúdo hoje?", type: "select", required: true, options: [
-        "Quase nunca", "1–2x/semana", "3–4x/semana", "Quase todo dia"
-      ]},
-
-      { id: "investimento", label: "Quanto você conseguiria investir por mês para alinhar seu Instagram ao seu nível?", type: "select", required: true, options: [
-        "R$ 0–500", "R$ 500–1.500", "R$ 1.500–3.000", "R$ 3.000+"
-      ]},
-
-      { id: "whatsapp", label: "Seu WhatsApp (para contato se for selecionado)", type: "tel", placeholder: "DDD + número", required: true },
+    const questions = [
+      { id: "nome", label: "Nome e sobrenome", type: "text" },
+      { id: "area", label: "Área de atuação", type: "text" },
+      { id: "tempo", label: "Quanto tempo de mercado você tem?", type: "text" },
+      { id: "perfil", label: "Link do seu Instagram ou site", type: "url" },
+      { id: "problema", label: "Qual o principal problema do seu Instagram hoje?", type: "text" },
+      { id: "ticket", label: "Qual o ticket médio do seu serviço?", type: "text" },
+      { id: "whatsapp", label: "Seu WhatsApp", type: "tel" }
     ];
 
-    // ============================
-    // UI / Estado
-    // ============================
-    const $ = (id) => document.getElementById(id);
+    const answers = {};
+    let index = 0;
 
-    const stage = $("stage");
-    const finalStage = $("finalStage");
-    const fieldWrap = $("fieldWrap");
-
-    const questionTitle = $("questionTitle");
-    const questionHint = $("questionHint");
-    const stepLabel = $("stepLabel");
-    const progressText = $("progressText");
-    const progressBar = $("progressBar");
-
-    const backBtn = $("backBtn");
-    const nextBtn = $("nextBtn");
-    const saveDraftBtn = $("saveDraftBtn");
-
-    const whatsBtn = $("whatsBtn");
-    const sendStatus = $("sendStatus");
-
-    let step = 0;
-    let answers = loadDraft() || {};
-
-    whatsBtn.href = WHATSAPP_LINK;
-
-    function pct(n, total) {
-      return Math.max(0, Math.min(100, Math.round((n / total) * 100)));
-    }
+    const questionEl = document.getElementById("question");
+    const fieldContainer = document.getElementById("field-container");
+    const nextBtn = document.getElementById("nextBtn");
 
     function render() {
-      const total = FORM.length;
-      const q = FORM[step];
+      const q = questions[index];
 
-      // labels
-      stepLabel.textContent = `${step + 1}/${total}`;
-      progressText.textContent = `${step + 1} de ${total}`;
-      progressBar.style.width = `${pct(step, total - 1)}%`;
+      questionEl.style.opacity = 0;
+      fieldContainer.style.opacity = 0;
 
-      // botões
-      backBtn.disabled = step === 0;
-      nextBtn.textContent = step === total - 1 ? "Enviar" : "Próximo";
-
-      // título
-      questionTitle.textContent = q.label;
-
-      // campo
-      fieldWrap.innerHTML = "";
-      fieldWrap.appendChild(buildField(q));
-
-      // anima
-      stage.classList.remove("fade-slide-out");
-      stage.classList.add("fade-slide-in");
-      setTimeout(() => stage.classList.remove("fade-slide-in"), 450);
-
-      // foco
-      const input = fieldWrap.querySelector("input, select, textarea");
-      if (input) setTimeout(() => input.focus(), 60);
-    }
-
-    function buildField(q) {
-      const wrap = document.createElement("div");
-      wrap.className = "space-y-2";
-
-      const help = document.createElement("div");
-      help.className = "text-paper-200/55 text-sm md:text-base";
-      help.textContent = q.required ? "Obrigatório" : "Opcional";
-      wrap.appendChild(help);
-
-      let el;
-
-      if (q.type === "select") {
-        el = document.createElement("select");
-        el.className = baseInputClass();
-        const opt0 = document.createElement("option");
-        opt0.value = "";
-        opt0.textContent = "Selecione";
-        opt0.disabled = true;
-        opt0.selected = !answers[q.id];
-        el.appendChild(opt0);
-
-        q.options.forEach(v => {
-          const o = document.createElement("option");
-          o.value = v;
-          o.textContent = v;
-          if (answers[q.id] === v) o.selected = true;
-          el.appendChild(o);
-        });
-      } else if (q.type === "textarea") {
-        el = document.createElement("textarea");
-        el.rows = 4;
-        el.className = baseInputClass() + " resize-none";
-        el.placeholder = q.placeholder || "";
-        el.value = answers[q.id] || "";
-      } else {
-        el = document.createElement("input");
-        el.type = q.type || "text";
-        el.className = baseInputClass();
-        el.placeholder = q.placeholder || "";
-        el.value = answers[q.id] || "";
-        if (q.type === "url") el.inputMode = "url";
-        if (q.type === "tel") el.inputMode = "tel";
-      }
-
-      el.id = "field";
-      el.addEventListener("input", () => {
-        answers[q.id] = el.value;
-      });
-      el.addEventListener("change", () => {
-        answers[q.id] = el.value;
-      });
-      el.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" && q.type !== "textarea") {
-          e.preventDefault();
-          next();
-        }
-      });
-
-      wrap.appendChild(el);
-
-      return wrap;
-    }
-
-    function baseInputClass() {
-      return [
-        "w-full rounded-xl px-4 py-4 md:px-5 md:py-5",
-        "bg-white/5 border border-white/10",
-        "text-paper-50 placeholder:text-paper-200/40",
-        "text-base md:text-lg",
-        "transition",
-        "soft-ring",
-        "hover:border-white/20"
-      ].join(" ");
-    }
-
-    function validateCurrent() {
-      const q = FORM[step];
-      const v = (answers[q.id] || "").trim();
-      if (!q.required) return true;
-      return v.length > 0;
-    }
-
-    function nudgeInvalid() {
-      const field = $("field");
-      if (!field) return;
-      field.classList.add("border-red-400/60");
-      setTimeout(() => field.classList.remove("border-red-400/60"), 650);
-    }
-
-    function next() {
-      if (!validateCurrent()) {
-        nudgeInvalid();
-        return;
-      }
-
-      if (step < FORM.length - 1) {
-        stage.classList.add("fade-slide-out");
-        setTimeout(() => {
-          step += 1;
-          render();
-        }, 220);
-        return;
-      }
-
-      // último passo -> enviar
-      submit();
-    }
-
-    function back() {
-      if (step === 0) return;
-      stage.classList.add("fade-slide-out");
       setTimeout(() => {
-        step -= 1;
+        questionEl.textContent = q.label;
+
+        fieldContainer.innerHTML = `
+          <input
+            id="answer"
+            type="${q.type}"
+            placeholder="Digite aqui"
+            class="w-full bg-transparent border-b border-white/20 focus:border-[#E6D3A3]
+                   outline-none text-xl md:text-2xl py-3 placeholder:text-white/30 transition-colors"
+            autofocus
+          />
+        `;
+
+        questionEl.style.opacity = 1;
+        fieldContainer.style.opacity = 1;
+      }, 200);
+    }
+
+    nextBtn.addEventListener("click", () => {
+      const input = document.getElementById("answer");
+      if (!input.value.trim()) return;
+
+      answers[questions[index].id] = input.value.trim();
+      index++;
+
+      if (index < questions.length) {
         render();
-      }, 220);
-    }
-
-    function saveDraft() {
-      try {
-        localStorage.setItem("diag_draft_v1", JSON.stringify(answers));
-      } catch {}
-    }
-
-    function loadDraft() {
-      try {
-        const raw = localStorage.getItem("diag_draft_v1");
-        return raw ? JSON.parse(raw) : null;
-      } catch {
-        return null;
+      } else {
+        document.getElementById("app").innerHTML = `
+          <h1 class="text-3xl md:text-5xl font-medium leading-tight mb-6">
+            Obrigado pelas respostas.
+          </h1>
+          <p class="text-white/70 text-lg max-w-xl">
+            Se o seu perfil for selecionado, eu entrarei em contato diretamente pelo WhatsApp.
+          </p>
+        `;
+        console.log("Respostas:", answers);
+        // aqui depois entra o envio pra planilha
       }
-    }
-
-    function clearDraft() {
-      try { localStorage.removeItem("diag_draft_v1"); } catch {}
-    }
-
-    async function submit() {
-      nextBtn.disabled = true;
-      nextBtn.textContent = "Enviando...";
-
-      // mostra tela final imediatamente (UX premium)
-      stage.classList.add("hidden");
-      finalStage.classList.remove("hidden");
-      finalStage.classList.add("fade-slide-in");
-
-      const payload = {
-        submittedAt: new Date().toISOString(),
-        answers
-      };
-
-      // se não colocou endpoint, só finaliza visualmente
-      if (!ENDPOINT_URL || ENDPOINT_URL.includes("COLE_A_URL")) {
-        sendStatus.textContent = "Endpoint não configurado ainda (você pode configurar depois no código).";
-        clearDraft();
-        return;
-      }
-
-      try {
-        // POST JSON (Apps Script precisa aceitar JSON; se seu script espera form-urlencoded, eu ajusto)
-        const res = await fetch(ENDPOINT_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        if (!res.ok) throw new Error("Falha no envio");
-        sendStatus.textContent = "Enviado com sucesso.";
-        clearDraft();
-      } catch (err) {
-        sendStatus.textContent = "Não consegui enviar automaticamente agora. Mas suas respostas ficaram salvas localmente — tente recarregar e enviar de novo.";
-        saveDraft();
-      }
-    }
-
-    backBtn.addEventListener("click", back);
-    nextBtn.addEventListener("click", next);
-    saveDraftBtn.addEventListener("click", () => {
-      saveDraft();
-      saveDraftBtn.textContent = "Salvo ✓";
-      setTimeout(() => saveDraftBtn.textContent = "Salvar rascunho", 900);
     });
 
-    // Render inicial
     render();
-
-    // Autosave leve
-    setInterval(saveDraft, 3000);
   </script>
 </body>
-</html>
