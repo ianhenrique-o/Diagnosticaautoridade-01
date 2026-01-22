@@ -1,101 +1,139 @@
-<body class="min-h-screen bg-[#0E0F11] text-[#F2F2F2] flex items-center justify-center font-sans">
-
-  <main id="app" class="w-full max-w-2xl px-6">
-
-    <!-- Pergunta -->
-    <h1 id="question"
-        class="text-3xl md:text-5xl font-medium leading-tight tracking-tight mb-10 transition-opacity duration-300">
-      Nome e sobrenome
-    </h1>
-
-    <!-- Resposta -->
-    <div id="field-container" class="mb-12 transition-opacity duration-300">
-      <input
-        id="answer"
-        type="text"
-        placeholder="Digite aqui"
-        class="w-full bg-transparent border-b border-white/20 focus:border-[#E6D3A3] outline-none
-               text-xl md:text-2xl py-3 placeholder:text-white/30 transition-colors"
-        autofocus
-      />
-    </div>
-
-    <!-- Ação -->
-    <button
-      id="nextBtn"
-      class="text-[#0E0F11] bg-[#E6D3A3] px-8 py-3 rounded-full text-sm font-medium
-             hover:opacity-90 transition">
-      Próximo
-    </button>
-
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Diagnóstico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: dark; }
+    body{
+      margin:0; min-height:100vh;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:#0E0F11; color:#F2F2F2;
+      display:flex; align-items:center; justify-content:center;
+      padding:24px;
+    }
+    .wrap{ width:100%; max-width:860px; }
+    .q{
+      font-size: clamp(28px, 4vw, 56px);
+      line-height: 1.05;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin: 0 0 28px;
+      opacity:1;
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+    .field{
+      width:100%;
+      font-size: clamp(18px, 2vw, 26px);
+      padding: 14px 0;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,.18);
+      color:#F2F2F2;
+      outline:none;
+      transition: border-color 180ms ease;
+    }
+    .field::placeholder{ color: rgba(242,242,242,.28); }
+    .field:focus{ border-bottom-color: #E6D3A3; }
+    .btn{
+      margin-top: 28px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: #E6D3A3;
+      color:#0E0F11;
+      font-weight:600;
+      cursor:pointer;
+      transition: opacity 160ms ease, transform 120ms ease;
+    }
+    .btn:hover{ opacity:.92; }
+    .btn:active{ transform: scale(.98); }
+    .out{ opacity:0; transform: translateY(-6px); }
+  </style>
+</head>
+<body>
+  <main class="wrap" id="app">
+    <h1 class="q" id="q">Nome e sobrenome</h1>
+    <input class="field" id="a" placeholder="Digite aqui" autocomplete="off" />
+    <button class="btn" id="next">Próximo</button>
   </main>
 
   <script>
-    const questions = [
-      { id: "nome", label: "Nome e sobrenome", type: "text" },
-      { id: "area", label: "Área de atuação", type: "text" },
-      { id: "tempo", label: "Quanto tempo de mercado você tem?", type: "text" },
-      { id: "perfil", label: "Link do seu Instagram ou site", type: "url" },
-      { id: "problema", label: "Qual o principal problema do seu Instagram hoje?", type: "text" },
-      { id: "ticket", label: "Qual o ticket médio do seu serviço?", type: "text" },
-      { id: "whatsapp", label: "Seu WhatsApp", type: "tel" }
+    // COLE SUA URL DO WEB APP AQUI (Apps Script)
+    const ENDPOINT_URL = "COLE_A_URL_DO_WEB_APP_AQUI";
+
+    const QUESTIONS = [
+      { id: "nome", label: "Nome e sobrenome", type: "text", required: true },
+      { id: "area", label: "Área de atuação", type: "text", required: true },
+      { id: "tempo", label: "Tempo de mercado", type: "text", required: true },
+      { id: "perfil", label: "Link do Instagram (ou site)", type: "url", required: true },
+      { id: "problema", label: "Qual o principal gargalo do seu Instagram hoje?", type: "text", required: true },
+      { id: "ticket", label: "Ticket médio do seu serviço", type: "text", required: true },
+      { id: "whatsapp", label: "WhatsApp para contato", type: "tel", required: true },
     ];
 
+    const $q = document.getElementById("q");
+    const $a = document.getElementById("a");
+    const $next = document.getElementById("next");
+    const $app = document.getElementById("app");
+
+    let i = 0;
     const answers = {};
-    let index = 0;
 
-    const questionEl = document.getElementById("question");
-    const fieldContainer = document.getElementById("field-container");
-    const nextBtn = document.getElementById("nextBtn");
-
-    function render() {
-      const q = questions[index];
-
-      questionEl.style.opacity = 0;
-      fieldContainer.style.opacity = 0;
-
+    function setQ() {
+      const cur = QUESTIONS[i];
+      $q.classList.add("out");
       setTimeout(() => {
-        questionEl.textContent = q.label;
-
-        fieldContainer.innerHTML = `
-          <input
-            id="answer"
-            type="${q.type}"
-            placeholder="Digite aqui"
-            class="w-full bg-transparent border-b border-white/20 focus:border-[#E6D3A3]
-                   outline-none text-xl md:text-2xl py-3 placeholder:text-white/30 transition-colors"
-            autofocus
-          />
-        `;
-
-        questionEl.style.opacity = 1;
-        fieldContainer.style.opacity = 1;
-      }, 200);
+        $q.textContent = cur.label;
+        $a.type = cur.type || "text";
+        $a.value = answers[cur.id] || "";
+        $a.placeholder = "Digite aqui";
+        $q.classList.remove("out");
+        setTimeout(() => $a.focus(), 60);
+      }, 220);
     }
 
-    nextBtn.addEventListener("click", () => {
-      const input = document.getElementById("answer");
-      if (!input.value.trim()) return;
+    async function submit() {
+      $app.innerHTML = `
+        <h1 class="q">Obrigado.</h1>
+        <div style="font-size:18px; line-height:1.5; color:rgba(242,242,242,.72); max-width:720px;">
+          Se você for selecionado, eu vou te chamar no WhatsApp com os próximos passos.
+        </div>
+      `;
 
-      answers[questions[index].id] = input.value.trim();
-      index++;
+      if (!ENDPOINT_URL || ENDPOINT_URL.includes("COLE_A_URL")) return;
 
-      if (index < questions.length) {
-        render();
-      } else {
-        document.getElementById("app").innerHTML = `
-          <h1 class="text-3xl md:text-5xl font-medium leading-tight mb-6">
-            Obrigado pelas respostas.
-          </h1>
-          <p class="text-white/70 text-lg max-w-xl">
-            Se o seu perfil for selecionado, eu entrarei em contato diretamente pelo WhatsApp.
-          </p>
-        `;
-        console.log("Respostas:", answers);
-        // aqui depois entra o envio pra planilha
-      }
+      try {
+        await fetch(ENDPOINT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ submittedAt: new Date().toISOString(), answers })
+        });
+      } catch {}
+    }
+
+    function next() {
+      const cur = QUESTIONS[i];
+      const v = ($a.value || "").trim();
+      if (cur.required && !v) return;
+
+      answers[cur.id] = v;
+      i++;
+
+      if (i >= QUESTIONS.length) return submit();
+      setQ();
+    }
+
+    $next.addEventListener("click", next);
+    $a.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); next(); }
     });
 
-    render();
+    setQ();
   </script>
 </body>
+</html>
